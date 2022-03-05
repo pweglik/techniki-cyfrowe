@@ -127,7 +127,44 @@ i oscyloskopem.
         Q_{n} = S + \overline{R}Q_{n-1}
     \end{align*}
 \end{enumerate}
-
+\chapter{Zadanie 1b}
+Celem zadania jest zaprojektowanie, zbudowanie i przetestowanie 
+układu detekcji liczby pierwszej w binarnym słowie czterobitowym
+\section{Rozwiązanie teoretyczne}
+W binarnym czterobitowym słowie można zapisać liczby od 0 do 15.
+Liczby pierwsze w tym zakresie to 2,3,5,7,11,13.
+Przy oznaczeniach wartośći bitów A,B,C,D w kolejności od najbardziej znaczącego funkcja logiczna ma postać
+\begin{align*}
+    f(A,B,C,D) = \sum(2,3,5,7,11,13)
+\end{align*}
+W celu wyznacznie najprostrzej postacji wpisano ją w tabeli Karnough
+    
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|cccc|}
+        \hline
+        AB/CD & 00 & 01 & 10 & 11 \\
+        \hline
+        00 & 0 & 0 & 1 & 1 \\
+        01 & 0 & 1 & 0 & 1 \\
+        10 & 0 & 0 & 0 & 1 \\
+        11 & 0 & 1 & 0 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{Tabela Karnough dla badanej funkcji}
+\end{table}
+Z tabeli można odczytać postać funkcji logicznej
+\begin{align*}
+    f(A,B,C,D) = \overline{A} \overline{B} C + \overline{A}B\overline{C}D 
+    + AB\overline{C}D + A\overline{B}CD + \overline{A}BCD   \\ 
+\end{align*}
+Stosująć prawa przekształceń równoważnych
+\begin{multline}
+    \\f(A,B,C,D) = \overline{A} \overline{B} C + (\overline{A}  
+    + A)B\overline{C}D + A\overline{B}CD + \overline{A}BCD   \\ 
+    f(A,B,C,D) = \overline{A} \overline{B} C 
+    + B\overline{C}D + (A\overline{B} + \overline{A}B)CD\\
+\end{multline}
 
 
 \end{document}
