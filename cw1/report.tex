@@ -22,7 +22,8 @@
 
 \usepackage{graphicx}
 \usepackage{subfig}
-
+\usepackage{float}
+\usepackage{booktabs}
 
 \hypersetup{
     colorlinks,
@@ -61,21 +62,42 @@ ponieważ bramka NAND jest systemem funkcjonalnie pełnym tzn.
 korzystając wyłącznie z niej można przedstawić dowolną funkcję
 boolowską.
 
-
-
 \section{Rozwiązanie teoretyczne}
 Pierwszym krokiem jest przekształcenie wyrażenie do zawierającego
 wyłączenie operacje NAND.
 \begin{align*}
     Y &= \overline{A}C + B(A + B) \\
+    &= \overline{A}C + B \\
     &= \overline{\overline{\overline{A}C}\overline{B}}
 \end{align*}
 
 \section{Symulacja w programie Multisim}
-Program został napisany w~języku~Python w wersji 3.8.
-Do stworzenia aplikacji graficznej użyto
-biblioteki~pygame\footnote{\url{https://www.pygame.org}}.
+Układ zbudowano w dwóch wersjach: pierwszej, z ręcznymi przełącznikami 
+pozwalającymi na zmianę stanu A, B i C oraz drugiej, z generatorami sygnału
+i oscyloskopem.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1a_circuit_simple.png}
+    \caption{Układ z ręcznymi przełącznikami}
+    \label{rys:1a_circuit_simple}
+\end{figure}
+
+\begin{figure}[H]]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1a_circuit_with_generators.png}
+    \caption{Układ z generatorami i oscyloskopem}
+    \label{rys:1a_circuit_with_generators}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/1a_timeseries.png}
+    \caption{Przebieg czasowy sygnałów. Od góry: A, B, C, Y}
+    \label{rys:1a_timeseries}
+\end{figure}
+
+\newpage
 \section{Wnioski}
 \begin{enumerate}
     \item Dzięki prawom logiki możemy uprosić skomplikowane wyrażenia
@@ -104,9 +126,8 @@ biblioteki~pygame\footnote{\url{https://www.pygame.org}}.
     \begin{align*}
         Q_{n} = S + \overline{R}Q_{n-1}
     \end{align*}
-
-
 \end{enumerate}
+
 
 
 \end{document}
