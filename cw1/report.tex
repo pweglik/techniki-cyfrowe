@@ -77,41 +77,36 @@ Do stworzenia aplikacji graficznej użyto
 biblioteki~pygame\footnote{\url{https://www.pygame.org}}.
 
 \section{Wnioski}
-Celem implementacji struktur jest
-stworzenie optymalnego
-algorytmu odpowiadającego na zapytanie:
+\begin{enumerate}
+    \item Dzięki prawom logiki możemy uprosić skomplikowane wyrażenia
+    w taki sposób, aby używały mniejszej ilości operacji logicznych.
+    \item Przedstawienie funkcji logicznej tylko za pomocą bramek NAND
+    ma praktyczne zastosowanie, ponieważ komeryjnie dostępne chipy często
+    zawierają kilka bramek tego samego rodzaju (np. 4xNAND, 4xOR itp.).
+    Dzięki uproszczeniu układu do bramek NAND, możemy go skonstruować
+    w rzeczywistościu używając tylko jednego chipu 4xNAND zamiast
+    trzech różnych: 4xNOT, 4xOR i 4xAND.
+    \item Podana funkcja logiczna po drobnym przekształceniu
+    \begin{align*}
+        Y = \overline{A}C + B(A + B) = \overline{A}C + B
+    \end{align*}
+    przedstawia równanie charakterystyczne przerzutnika 
+    asynchronicznego typu RS. 
+    Po podstawieniach
+    \begin{align*}
+        A &= R\\
+        B &= S\\
+        C &= Q_{n-1}\\
+        Y &= Q_{n}\\
+    \end{align*}
+        
+    otrzymujemy
+    \begin{align*}
+        Q_{n} = S + \overline{R}Q_{n-1}
+    \end{align*}
 
 
+\end{enumerate}
 
-\chapter{Zadanie 1b}
-
-
-Wykorzystamy funkcję działajacą w~następujący sposób:
-    \begin{enumerate}
-        \item porównanie obszaru zapytania z~aktualnie rozważanym wierzchołkiem,
-        \begin{enumerate}
-            \item jeśli obszar zawiera rozważany punkt, dodaj go do zbioru wynikowego,
-        \end{enumerate}
-        \item wywołaj funkcję rekurencyjnie dla każdego podobszaru przecinajacego się
-        z~obszarem zapytania.
-    \end{enumerate}
-W~ten sposób w~każdym kroku zmniejszamy obszar poszukiwań.
-
-Złożoność:
-\begin{itemize}
-    \item $O(\log n)$ dla pojedynczego punktu,
-    \item $O(m\log n)$ dla zadanego obszaru, gdzie $m$ to ilość punktów w~tym obszarze.
-\end{itemize}
-
-Na Rys.~\ref{rys:example_picture} przedstawiono animację znajdującą pojedyczny punkt na płaszczyźnie
-(sytuacja ta jest zatem tożsama ze wstawianiem punktu).
-Jak widzimy podziały nie zawsze są równe.
-Wynika to z~niezbalansowania drzewa.
-
-\begin{figure}[h]
-    \includegraphics[width=0.44\textwidth]{images/example.png}
-    \caption{Wyszukiwanie pojedynczego punktu w drzewie czwórkowym}
-    \label{rys:example_picture}
-\end{figure}
 
 \end{document}
