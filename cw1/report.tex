@@ -155,16 +155,58 @@ W celu wyznacznie najprostrzej postacji wpisano ją w tabeli Karnough
 \end{table}
 Z tabeli można odczytać postać funkcji logicznej
 \begin{align*}
-    f(A,B,C,D) = \overline{A} \overline{B} C + \overline{A}B\overline{C}D 
-    + AB\overline{C}D + A\overline{B}CD + \overline{A}BCD   \\ 
+    f(A,B,C,D) = \widetilde{A} \widetilde{B} C + \widetilde{A}B\widetilde{C}D 
+    + AB\widetilde{C}D + A\widetilde{B}CD + \widetilde{A}BCD   \\ 
 \end{align*}
 Stosująć prawa przekształceń równoważnych
-\begin{multline}
-    \\f(A,B,C,D) = \overline{A} \overline{B} C + (\overline{A}  
-    + A)B\overline{C}D + A\overline{B}CD + \overline{A}BCD   \\ 
-    f(A,B,C,D) = \overline{A} \overline{B} C 
-    + B\overline{C}D + (A\overline{B} + \overline{A}B)CD\\
-\end{multline}
+\begin{align*}
+    f(A,B,C,D) &= \widetilde{A} \widetilde{B} C + (\widetilde{A}  
+    + A)B\widetilde{C}D + A\widetilde{B}CD + \widetilde{A}BCD   \\ 
+    f(A,B,C,D) &= \widetilde{A} \widetilde{B} C 
+    + B\widetilde{C}D + (A\overline{B} + \overline{A}B)CD\\
+\end{align*}
+\section{Budowa i symulacja układu w programie mulitsim}
+W celu konstrukcji układu należy przełożyć wzór funkcji na bramki logiczne.
+Funkcja jest alternatywą trzech składników.
+Pierwszy z nich $ \widetilde{A} \widetilde{B} C $ można reprezentować
+przez bramkę NOR2 i AND2. Wyrażenie $ B\widetilde{C}D $ można zastąpić bramką NOT i AND3
+a $ (A\overline{B} + \overline{A}B)CD $ jako połącznie XOR2 i AND3.
+Trzy wyrażenia połączone zostały bramką logiczną OR3. 
+Słowa bitowe reprezentujące testowane liczby można wprowadzać przez cztery przełączniki.
+Gdy wprowadzone zostanie słowo reprezentujące liczbę pierwszą zapala się dioda.
 
+Opisany schemat w programie multisim.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1b_schema_1.PNG}
+    \caption{Układ z ręcznymi przełącznikami}
+    \label{rys:1b_usable_circuit}
+\end{figure}
 
+W celu kompleksowego przetestowania układu przyciski zamieniono na generator słów bitowych XWG1 
+oraz podłączono oscyloskop pozwalający na badanie stanu logicznego pinów XLA1.
+Odpowiednio dobierając częstotliwości próbkowania i generowanych sygnałów możemy zweryfikować poprawność układu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1b_schema_2.PNG}
+    \caption{Układ testowy}
+    \label{rys:1b_test_circuit}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1b_result.PNG}
+    \caption{Wskazania oscyloskopu}
+    \label{rys:1b_test_results}
+\end{figure}
+Ze wskazań oscyloskopu można stwierdzić że dla każdego możliwego słowa bitowego otrzymano poprawną wartość.
+Układ wygenerował stan wysoki dla słów odpowiadającym 2,3,5,7,11,13.
+\section{Zastosowania}
+TODO
+\section{Podsumowanie}
+\begin{enumerate}
+    \item Funkcja logiczna została przekształcona do postaci pozwalającej na użycie jak najmniejszej ilości bramek.
+    \item Układ pozwala identyfikować słowa binarne reprezentujące liczby pierwsze.
+    \item Przetestowano poprawność układu stosując oscyloskop i generator słów losowych.
+\end{enumerate}
 \end{document}
