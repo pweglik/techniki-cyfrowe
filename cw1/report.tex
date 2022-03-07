@@ -50,19 +50,18 @@ Sprawozdanie 1\\
 \maketitle
 
 \chapter{Zadanie 1a}
-
-\section{Wstęp}
 Zadanie polega na zaprojektowaniu układu realizującego 
 funkcję logiczną:
 \begin{align*}
     Y = \overline{A}C + B(A + B)
 \end{align*}
+
+\section{Rozwiązanie teoretyczne}
 Układ można zrealizować wyłącznie dzięki użyciu bramek NAND
 ponieważ bramka NAND jest systemem funkcjonalnie pełnym tzn.
 korzystając wyłącznie z niej można przedstawić dowolną funkcję
 boolowską.
 
-\section{Rozwiązanie teoretyczne}
 Pierwszym krokiem jest przekształcenie wyrażenie do zawierającego
 wyłączenie operacje NAND.
 \begin{align*}
@@ -73,8 +72,8 @@ wyłączenie operacje NAND.
 
 \section{Symulacja w programie Multisim}
 Układ zbudowano w dwóch wersjach: pierwszej, z ręcznymi przełącznikami 
-pozwalającymi na zmianę stanu A, B i C oraz drugiej, z generatorami sygnału
-i oscyloskopem.
+pozwalającymi na zmianę stanu A, B i C oraz drugiej, z generatorem słów bitowych
+i analizatorem stanów logicznych.
 
 \begin{figure}[H]
     \centering
@@ -86,7 +85,7 @@ i oscyloskopem.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/1a_circuit_word_generator.png}
-    \caption{Układ z generatorami i oscyloskopem}
+    \caption{Układ z generatorem i analizatorem}
     \label{rys:1a_circuit_with_generators}
 \end{figure}
 
@@ -103,10 +102,10 @@ i oscyloskopem.
     \item Dzięki prawom logiki możemy uprosić skomplikowane wyrażenia
     w taki sposób, aby używały mniejszej ilości operacji logicznych.
     \item Przedstawienie funkcji logicznej tylko za pomocą bramek NAND
-    ma praktyczne zastosowanie, ponieważ komeryjnie dostępne chipy często
+    ma praktyczne zastosowanie, ponieważ komercyjnie dostępne chipy często
     zawierają kilka bramek tego samego rodzaju (np. 4xNAND, 4xOR itp.).
     Dzięki uproszczeniu układu do bramek NAND, możemy go skonstruować
-    w rzeczywistościu używając tylko jednego chipu 4xNAND zamiast
+    w rzeczywistością używając tylko jednego chipu 4xNAND zamiast
     trzech różnych: 4xNOT, 4xOR i 4xAND.
     \item Podana funkcja logiczna po drobnym przekształceniu
     \begin{align*}
@@ -129,15 +128,15 @@ i oscyloskopem.
 \end{enumerate}
 \chapter{Zadanie 1b}
 Celem zadania jest zaprojektowanie, zbudowanie i przetestowanie 
-układu detekcji liczby pierwszej w binarnym słowie czterobitowym
+układu detekcji liczby pierwszej w binarnym słowie czterobitowym.
 \section{Rozwiązanie teoretyczne}
 W binarnym czterobitowym słowie można zapisać liczby od 0 do 15.
 Liczby pierwsze w tym zakresie to 2,3,5,7,11,13.
-Przy oznaczeniach wartośći bitów A,B,C,D w kolejności od najbardziej znaczącego funkcja logiczna ma postać
+Przy oznaczeniach wartości bitów A,B,C,D w kolejności od najbardziej znaczącego funkcja logiczna ma postać
 \begin{align*}
     f(A,B,C,D) = \sum(2,3,5,7,11,13)
 \end{align*}
-W celu wyznacznie najprostrzej postacji wpisano ją w tabeli Karnough
+W celu wyznaczenie najprostszej postaci wpisano ją w tabeli Karnough
     
 \begin{table}[h!]
     \centering
@@ -158,7 +157,7 @@ Z tabeli można odczytać postać funkcji logicznej
     f(A,B,C,D) = \widetilde{A} \widetilde{B} C + \widetilde{A}B\widetilde{C}D 
     + AB\widetilde{C}D + A\widetilde{B}CD + \widetilde{A}BCD   \\ 
 \end{align*}
-Stosująć prawa przekształceń równoważnych
+Stosując prawa przekształceń równoważnych
 \begin{align*}
     f(A,B,C,D) &= \widetilde{A} \widetilde{B} C + (\widetilde{A}  
     + A)B\widetilde{C}D + A\widetilde{B}CD + \widetilde{A}BCD   \\ 
@@ -170,7 +169,7 @@ W celu konstrukcji układu należy przełożyć wzór funkcji na bramki logiczne
 Funkcja jest alternatywą trzech składników.
 Pierwszy z nich $ \widetilde{A} \widetilde{B} C $ można reprezentować
 przez bramkę NOR2 i AND2. Wyrażenie $ B\widetilde{C}D $ można zastąpić bramką NOT i AND3
-a $ (A\overline{B} + \overline{A}B)CD $ jako połącznie XOR2 i AND3.
+a $ (A\overline{B} + \overline{A}B)CD $ jako połączenie XOR2 i AND3.
 Trzy wyrażenia połączone zostały bramką logiczną OR3. 
 Słowa bitowe reprezentujące testowane liczby można wprowadzać przez cztery przełączniki.
 Gdy wprowadzone zostanie słowo reprezentujące liczbę pierwszą zapala się dioda.
@@ -184,7 +183,7 @@ Opisany schemat w programie multisim.
 \end{figure}
 
 W celu kompleksowego przetestowania układu przyciski zamieniono na generator słów bitowych XWG1 
-oraz podłączono oscyloskop pozwalający na badanie stanu logicznego pinów XLA1.
+oraz podłączono analizator stanów logicznych XLA1.
 Odpowiednio dobierając częstotliwości próbkowania i generowanych sygnałów możemy zweryfikować poprawność układu.
 
 \begin{figure}[H]
@@ -196,17 +195,23 @@ Odpowiednio dobierając częstotliwości próbkowania i generowanych sygnałów 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/1b_result.PNG}
-    \caption{Wskazania oscyloskopu}
+    \caption{Wskazania analizatora}
     \label{rys:1b_test_results}
 \end{figure}
-Ze wskazań oscyloskopu można stwierdzić że dla każdego możliwego słowa bitowego otrzymano poprawną wartość.
+Ze wskazań analizatora można stwierdzić że dla każdego możliwego słowa bitowego otrzymano poprawną wartość.
 Układ wygenerował stan wysoki dla słów odpowiadającym 2,3,5,7,11,13.
-\section{Zastosowania}
-TODO
+\section{Wnioski}
+\begin{enumerate}
+    \item Układ jest prosty do zaimplementowania ponieważ polega na bezpośrednim mapowaniu danych wejściowych do oczekiwanego
+    wyjścia ale przez to nie jest to rozwiązanie które można by skalować dla dłuższych słów bitowych.
+    \item Sprzętowe generowanie liczb pierwszych może wspomóc oprogramowanie wykonujące testy pierwszości
+    poprzez szybkie sprawdzenie małych liczb pierwszych.
+    \item W celu przeskalowania układu do praktycznych zastosowań można użyć układów sprzętowego tablicowania wartości 
+\end{enumerate}
 \section{Podsumowanie}
 \begin{enumerate}
     \item Funkcja logiczna została przekształcona do postaci pozwalającej na użycie jak najmniejszej ilości bramek.
     \item Układ pozwala identyfikować słowa binarne reprezentujące liczby pierwsze.
-    \item Przetestowano poprawność układu stosując oscyloskop i generator słów losowych.
+    \item Przetestowano poprawność układu stosując analizator stanów logicznych i generator słów losowych.
 \end{enumerate}
 \end{document}
