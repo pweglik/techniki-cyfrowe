@@ -154,21 +154,21 @@ W celu wyznaczenie najprostszej postaci wpisano ją w tabeli Karnough
 \end{table}
 Z tabeli można odczytać postać funkcji logicznej
 \begin{align*}
-    f(A,B,C,D) = B\bar{C}D  + \bar{A}CD 
-    + \bar{A}\bar{B}C + C\bar{B}D   \\ 
+    f(A,B,C,D) = B\overline{C}D  + \overline{A}CD 
+    + \overline{A}\,\overline{B}C + C\overline{B}D   \\ 
 \end{align*}
 Stosując prawa przekształceń równoważnych
 \begin{align*}
-    f(A,B,C,D) &= B\bar{C}D 
-    + \bar{A}\bar{B}C + CD(\bar{A} + \bar{B})   \\ 
-    f(A,B,C,D) &= \overline{(A + B)}C + B\bar{C}D 
+    f(A,B,C,D) &= B\overline{C}D 
+    + \overline{A}\,\overline{B}C + CD(\overline{A} + \overline{B})   \\ 
+    f(A,B,C,D) &= \overline{(A + B)}C + B\overline{C}D 
     +  CD\overline{(AB)}\\
 \end{align*}
 \section{Budowa i symulacja układu w programie mulitsim}
 W celu konstrukcji układu należy przełożyć wzór funkcji na bramki logiczne.
 Funkcja jest alternatywą trzech składników.
 Pierwszy z nich $ \overline{(A+B)} C $ można reprezentować
-przez bramkę NAND i AND. Wyrażenie $ B\bar{C}D $ można zastąpić bramką NOT i AND3
+przez bramkę NAND i AND. Wyrażenie $ B\overline{C}D $ można zastąpić bramką NOT i AND3
 a $ CD\overline{(AB)} $ jako połączenie NOR i AND.
 Trzy wyrażenia połączone zostały bramką logiczną OR3. 
 Słowa bitowe reprezentujące testowane liczby można wprowadzać przez cztery przełączniki.
