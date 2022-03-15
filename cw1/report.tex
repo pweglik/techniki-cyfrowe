@@ -142,34 +142,34 @@ W celu wyznaczenie najprostszej postaci wpisano ją w tabeli Karnough
     \centering
     \begin{tabular}{|c|cccc|}
         \hline
-        AB/CD & 00 & 01 & 10 & 11 \\
+        AB/CD & 00 & 01 & 11 & 10 \\
         \hline
         00 & 0 & 0 & 1 & 1 \\
-        01 & 0 & 1 & 0 & 1 \\
-        10 & 0 & 0 & 0 & 1 \\
+        01 & 0 & 1 & 1 & 0 \\
         11 & 0 & 1 & 0 & 0 \\
+        10 & 0 & 0 & 1 & 0 \\
         \hline
     \end{tabular}
     \caption{Tabela Karnough dla badanej funkcji}
 \end{table}
 Z tabeli można odczytać postać funkcji logicznej
 \begin{align*}
-    f(A,B,C,D) = \widetilde{A} \widetilde{B} C + \widetilde{A}B\widetilde{C}D 
-    + AB\widetilde{C}D + A\widetilde{B}CD + \widetilde{A}BCD   \\ 
+    f(A,B,C,D) = B\bar{C}D  + \bar{A}CD 
+    + \bar{A}\bar{B}C + C\bar{B}D   \\ 
 \end{align*}
 Stosując prawa przekształceń równoważnych
 \begin{align*}
-    f(A,B,C,D) &= \widetilde{A} \widetilde{B} C + (\widetilde{A}  
-    + A)B\widetilde{C}D + A\widetilde{B}CD + \widetilde{A}BCD   \\ 
-    f(A,B,C,D) &= \widetilde{A} \widetilde{B} C 
-    + B\widetilde{C}D + (A\overline{B} + \overline{A}B)CD\\
+    f(A,B,C,D) &= B\bar{C}D 
+    + \bar{A}\bar{B}C + CD(\bar{A} + \bar{B})   \\ 
+    f(A,B,C,D) &= \overline{(A + B)}C + B\bar{C}D 
+    +  CD\overline{(AB)}\\
 \end{align*}
 \section{Budowa i symulacja układu w programie mulitsim}
 W celu konstrukcji układu należy przełożyć wzór funkcji na bramki logiczne.
 Funkcja jest alternatywą trzech składników.
-Pierwszy z nich $ \widetilde{A} \widetilde{B} C $ można reprezentować
-przez bramkę NOR2 i AND2. Wyrażenie $ B\widetilde{C}D $ można zastąpić bramką NOT i AND3
-a $ (A\overline{B} + \overline{A}B)CD $ jako połączenie XOR2 i AND3.
+Pierwszy z nich $ \overline{(A+B)} C $ można reprezentować
+przez bramkę NAND i AND. Wyrażenie $ B\bar{C}D $ można zastąpić bramką NOT i AND3
+a $ CD\overline{(AB)} $ jako połączenie NOR i AND.
 Trzy wyrażenia połączone zostały bramką logiczną OR3. 
 Słowa bitowe reprezentujące testowane liczby można wprowadzać przez cztery przełączniki.
 Gdy wprowadzone zostanie słowo reprezentujące liczbę pierwszą zapala się dioda.
