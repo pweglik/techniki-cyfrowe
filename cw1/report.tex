@@ -96,6 +96,38 @@ i analizatorem stanów logicznych.
     \label{rys:1a_timeseries}
 \end{figure}
 
+Dla jednoznacznego przetestowania do układu dodano specjalny układ
+testujący odpowiadający w bezpośredni sposób żądanemu układowi wejściowemu.
+Układ testowy zaimplementowano jako osobny podukład:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1a_test.png}
+    \caption{Układ testujący}
+    \label{rys:1a_test}
+\end{figure}
+
+Następnie dołączono go do układu przedstawionego na rysunku
+\ref{rys:1a_circuit_with_generators}, a wyjście z obu układów
+(rzeczywistego i testującego) podłączono przez bramkę
+XNOR (aby sprawdzić ich równoważność) do analizatora logicznego
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1a_circuit_with_test.png}
+    \caption{Cały układ w raz z układem testującym}
+    \label{rys:1a_circuit_with_test}
+\end{figure}
+
+Zachowanie układu prześledzono na ekranie analizatora.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1a_output_with_test.png}
+    \caption{Widok w analizatorze. Czerwone linie oznaczają dane wejściowe, linia niebieska - dane wyjściowe, a linia zielona - wynik testu. Jak widać, jest zawsze wysoko, a zatem wyjście układu zbudowanego z NANDów zgadza się z wyjściem układu testowego}
+    \label{rys:1a_output_with_test}
+\end{figure}
+
 \newpage
 \section{Wnioski}
 \begin{enumerate}
