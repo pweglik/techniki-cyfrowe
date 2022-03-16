@@ -214,10 +214,20 @@ Opisany schemat w programie multisim.
     \label{rys:1b_usable_circuit}
 \end{figure}
 
+\section{Testy}
 W celu kompleksowego przetestowania układu przyciski zamieniono na generator słów bitowych XWG1 
-oraz podłączono analizator stanów logicznych XLA1.
-Odpowiednio dobierając częstotliwości próbkowania i generowanych sygnałów możemy zweryfikować poprawność układu.
+oraz podłączono analizator stanów logicznych XLA1. Na ostatnim bicie wyjścia generatora słów bitowych ustawiono
+ręcznie oczekiwane odpowiedzi. Pin z oczekiwanymi odpowiedziami połączony został bramką XOR z wyjściem testowanego
+układu która podłączona jest do analizatora cyfrowego. Stan wysoki na tej bramce oznaczałby błąd w zaprojektowanym układzie.
+Sprawdzenie za pomocą analizatora cyfrowego czy dla każdej kombinacji wejścia wspomniana bramka XOR ma stan niski pozwala na
+zweryfikowanie poprawności układu
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/1b_word_generator.PNG}
+    \caption{Wartości z generatora słów bitowych}
+    \label{rys:1b_test_circuit}
+\end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/1b_schema_2.PNG}
@@ -226,7 +236,7 @@ Odpowiednio dobierając częstotliwości próbkowania i generowanych sygnałów 
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/1b_result.PNG}
+    \includegraphics[width=0.6\textwidth]{images/1b_result.PNG}
     \caption{Wskazania analizatora}
     \label{rys:1b_test_results}
 \end{figure}
