@@ -1,0 +1,377 @@
+\documentclass[12pt,a4paper,table]{article}
+
+\usepackage{lmodern}
+\usepackage[T1]{polski}
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper,
+            tmargin=2cm,
+            bmargin=2cm,
+            lmargin=2cm,
+            rmargin=2cm,
+            bindingoffset=0cm]{geometry}
+
+\usepackage[table, w11colors]{xcolor}
+\usepackage{tocloft}
+\usepackage{hyperref}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+
+\usepackage{listings}
+
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{booktabs}
+
+\usepackage{tikz-timing}
+
+
+
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\newtheorem{definition}{Def}
+
+
+\begin{document}
+    \title {
+        Technika Cyfrowa - Sprawozdanie nr 3
+    }
+
+    \author{
+        Jan Chyczyński \\
+        Bartłomiej Słupik \\
+        Przemysław Węglik \\
+        Błażej Nowicki
+    }
+
+    \date{\today}
+
+    \maketitle
+
+    \section{Zadanie 3a}
+    Zadanie polega na zaprojektowaniu i przetestowaniu dwójki logicznej w oparciu
+    o przerzutnik JK. Następnie należy zastosować zaprojektowany układ w budowie 
+    asynchronicznego licznika modulo 8.
+
+    \subsection{Idea}
+    Dwójka licząca to układ, który posiada wejście zegarowe CLK i wyjćsie Q. Przy kolejnych
+    impulsach zegara, a dokładniej przy przejściu ze stanu niskiego na wysoki,
+    stan wyjścia Q jest zmieniany na przeciwny.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=.3\linewidth]{images/dwojka_liczaca.PNG}
+        \caption{Schemat koncepcyjny dwójki liczącej}
+        \label{fig:dwojka_koncepcja}
+    \end{figure}
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            Q & $Q_+$ \texttiming{LH} \\ \hline
+            1 & 0 \\ \hline
+            0 & 1 \\ \hline
+        \end{tabular}
+        \caption{Oczekiwana tabela prawdy układu. Spełnia on równanie $Q_+ = \overline{Q}$}
+        \label{tab:dwojka_truthtable}
+    \end{table}
+
+    \pagebreak
+    \subsection{Rozwiązanie teoretyczne}
+    W implementacji dwójki liczącej należało użyć przerzutnika typu JK. Poniżej przedstawiono
+    tabelę prawdy tego przerzutnika:
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|ccc|c|}
+            \hline
+            J & K & Q & $Q_+$ \texttiming{LH} \\ \hline
+            0 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 1 \\
+            \rowcolor{cyan}
+            1 & 0 & 0 & 1 \\
+            1 & 0 & 1 & 1 \\
+            0 & 1 & 0 & 0 \\
+            \rowcolor{cyan}
+            0 & 1 & 1 & 0 \\
+            \rowcolor{lime}
+            1 & 1 & 0 & 1 \\
+            \rowcolor{lime}   
+            1 & 1 & 1 & 0 \\ \hline        
+        \end{tabular}
+        \caption{Tabela prawdy przerzutnika JK. Kolorami oznaczono stany, w których przerzutnik zmienia Q na przeciwne}
+        \label{tab:JK_truthtable}
+    \end{table}
+
+    Szukamy funkcji J(Q) i K(Q). Warunek $Q_+ = \overline{Q}$ zachodzi, gdy $J(Q) = K(Q) = 1$ (zielony) lub gdy
+    $J(Q) = \overline{Q}$ i $K(Q) = Q$ (niebieski). Pierwsze rozwiązanie jest znacznie prostsze w implementacji,
+    gdyż wymaga tylko podłączenia J i K wysoko.  Zatem schemat układu może wyglądać tak, jak na poniższym rysunku:
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.7\linewidth]{images/dwojka_schemat.PNG}
+        \caption{Schemat układu dwójki liczącej}
+        \label{fig:dwojka_schemat}
+    \end{figure}
+
+    \pagebreak
+    \subsection{Symulacja w programie Multisim}
+    W programie Multisim stworzono następujący układ testowy składający się ze źródła fali
+    prostokątnej, dwójki liczącej, generatora słów binarnych oraz analizatora stanów logicznych:
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\linewidth]{images/dwojka_test.PNG}
+        \caption{Schemat układu testującego}
+        \label{fig:dwojka_test}
+    \end{figure}
+
+    Przeprowadzono symulację i uzyskano następujące dane na analizatorze:
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\linewidth]{images/dwolka_xla.PNG}
+        \caption{Wykresy stanów na ekranie analizatora}
+        \label{fig:dwojka_xla}
+    \end{figure}
+
+    Widać, że oczekiwany efekt zachodzi - wyjście Q zmienia stan na przeciwny przy impulsie zegara.
+    Fala na wyjściu ma dwukrotnie większy okres, niż ta na wejściu.
+
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Dwójkę liczącą można zastosować do dwukrotnego zmniejszenia częstotliwości fali
+        prostokątnej.
+
+        \item Dwójkę liczącą można zastosować również w sterowaniu innymi układami przy pomocy
+        przycisku dzwonkowego, aby uzyskać dwa ciągłe stany i przełączać się między nimi przy
+        kolejnych naciśnięciach - na przykład włączanie i wyłączanie lampy
+
+        \item Dwójkę liczącą można zastosować także na linii produkcyjnej, jeśli chcemy rozdzielić
+        obróbkę produktu na dwie maszyny
+    \end{enumerate}
+
+
+
+
+
+
+    \pagebreak
+    \section{Zadanie 3b}
+    Zadanie polega na zaprojektowaniu i zbudowaniu synchronicznego czterobitowego licznika
+    liczącego w kodzie Gray'a.
+
+    \subsection{Idea}
+    Układ docelowy powinien posiadać wejście zegara CLK oraz cztery wyjścia
+    $G_1, G_2, G_3, G_4$ odwzorowywujące cyfry czterobitowej liczby zapisanej w kodzie Gray'a.
+    Przy impulsie zegara, wyjście powinno przestawiać się na kolejną liczbę, a z ostatniego
+    stanu $1111_2 = 1000_G$ wrócić na początkowy - $0000_2 = 0000_G$.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[]{images/gray_idea.PNG}
+        \caption{Schemat koncepcyjny licznika w kodzie Gray'a}
+        \label{fig:gray_idea}
+    \end{figure}
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|cc|cc|cc|cc|}
+            \hline
+            $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ \\
+            \hline
+            0 & 0000 & 4 & 0110 & 8  & 1100 & 12 & 1010 \\
+            1 & 0001 & 5 & 0111 & 9  & 1101 & 13 & 1011 \\
+            2 & 0011 & 6 & 0101 & 10 & 1111 & 14 & 1001 \\
+            3 & 0010 & 7 & 0100 & 11 & 1110 & 15 & 1000 \\
+            \hline
+        \end{tabular}
+        \caption{Oczekiwane wyjścia układu dla kolejnych stanów}
+        \label{tab:gray_exp_output}
+    \end{table}
+
+    \pagebreak
+    \subsection{Rozwiązanie teoretyczne}
+    \subsubsection{Tabela prawdy układu}
+    Jako, że układ ma 16 możliwych stanów, można zaprojektować go na czterech przerzutnikach. 
+    Zdecydowaliśmy się na przerzutniki T, gdyż kod Gray'a bazuje na zmianach stanu jednego, danego bitu.
+    Układ posiada 8 zmiennych: wyjścia przerzutników $Q_3, \dots, Q_0$ i ich wejścia T: $T_3, \dots, T_0$.
+    Oczekiwane stany tych zmiennych przedstawiono w Tabeli \ref{tab:gray_states}.
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|c|cccc|c|cccc|} 
+            \hline
+            N & $Q_3$ & $Q_2$ & $Q_1$ & $Q_0$ & Zmiana & $T_3$ & $T_2$ & $T_1$ & $T_0$ \\ \hline
+            0&	0&	0&	0&	0&	0 $\rightarrow$ 1&	    0&	0&	0&	1 \\
+            1&	0&	0&	0&	1&	1 $\rightarrow$ 2&	    0&	0&	1&	0 \\
+            2&	0&	0&	1&	1&	2 $\rightarrow$ 3&	    0&	0&	0&	1 \\
+            3&	0&	0&	1&	0&	3 $\rightarrow$ 4&	    0&	1&	0&	0 \\
+            4&	0&	1&	1&	0&	4 $\rightarrow$ 5&	    0&	0&	0&	1 \\
+            5&	0&	1&	1&	1&	5 $\rightarrow$ 6&	    0&	0&	1&	0 \\
+            6&	0&	1&	0&	1&	6 $\rightarrow$ 7&	    0&	0&	0&	1 \\
+            7&	0&	1&	0&	0&	7 $\rightarrow$ 8&	    1&	0&	0&	0 \\
+            8&	1&	1&	0&	0&	8 $\rightarrow$ 9&	    0&	0&	0&	1 \\
+            9&	1&	1&	0&	1&	9 $\rightarrow$ 10&    0&	0&	1&	0 \\
+            10&	1&	1&	1&	1&	10 $\rightarrow$ 11&	0&	0&	0&	1 \\
+            11&	1&	1&	1&	0&	11 $\rightarrow$ 12&	0&	1&	0&	0 \\
+            12&	1&	0&	1&	0&	12 $\rightarrow$ 13&	0&	0&	0&	1 \\
+            13&	1&	0&	1&	1&	13 $\rightarrow$ 14&	0&	0&	1&	0 \\
+            14&	1&	0&  0&	1&	14 $\rightarrow$ 15&	0&	0&	0&	1 \\
+            15&	1&	0&	0&	0&	15 $\rightarrow$ 0&    1&	0&	0&	0 \\
+            \hline
+        \end{tabular}
+        \caption{Oczekiwane stany zmiennych układu}
+        \label{tab:gray_states}
+    \end{table}
+    
+    \subsubsection{Wyprowadzenie funkcji logicznych}
+    Stosując tabele Karnough przedstawione \textbf{na kolejnej stronie}, wyprowadzono wzory na $T_0, \dots, T_3$:
+    \begin{align*}
+        T_0 &= \overline{(Q_1 \oplus Q_3) \cdot (Q_0 \oplus Q_2)} \\
+        T_1 &= Q_0 \cdot \overline{(Q_3 \oplus (Q_1 \oplus Q_2))} \\
+        T_2 &= Q_1 \cdot \overline{Q_0} \cdot \overline{(Q_3 \cdot Q_2)} \\
+        T_3 &= \overline{Q_0} \cdot \overline{Q_1} \cdot (Q_3 \oplus Q_2)
+    \end{align*}
+    
+
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=\linewidth]{images/gray_wyprowadzenie.PNG}
+        \caption{Wyprowadzenie funkcji $T_0, \dots T_3$ przy pomocy tabeli Karnough}
+    \end{figure}
+
+
+    \pagebreak
+    \subsubsection{Schemat czterobitowego licznika Gray'a}
+    Po podłączeniu wszystkich wejść $T_i$ według planu, otrzymujemy następujący schemat:
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.85\linewidth]{images/gray_schematic.PNG}
+        \caption{Schemat czterobitowego licznika liczącego w kodzie Gray'a}
+        \label{fig:gray_schemat}
+    \end{figure}
+
+    \subsection{Testy w programie Multisim}
+    W programie Multisim stworzono następujący układ testowy, składający się z badanego układu, 
+    generatora fali prostokątnej, generatora słów binarnych oraz analizatora logicznego. Logika
+    ma na celu stwierdzenie równoważności wyjścia oczekiwanego i otrzymanego.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\linewidth]{images/gray_test.PNG}
+        \caption{Schemat układu testującego}
+        \label{fig:gray_test}
+    \end{figure}
+
+    \pagebreak
+    W generatorze słów binarnych wpisano liczby z zakresu 0-15 w kodzie Gray'a:
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\linewidth]{images/gray_xwb.PNG}
+        \caption{Ustawienia generatora słów binarnych}
+        \label{fig:gray_xwb}
+    \end{figure}
+
+    Poniżej przedstawiono wykres wygenerowany przez analizator stanów logicznych:
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{images/gray_xla.PNG}
+        \caption{Przebieg stanów logicznych podczas 16 cykli zegara}
+        \label{fig:gray_xla}
+    \end{figure}
+
+    Górne wykresy to wyjście oczekiwane, dolne - wyjście uzyskane. Zielony wykres to równoważność
+    tych stanów - jest zawsze w stanie wysokim, co dowodzi poprawności działania układu
+
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Licznik w kodzie Gray'a ma przewagę nad zwykłym licznikiem binarnym, gdyż podczas przejścia
+        między kolejnymi stanami zmienia się tylko jeden bit. Odczytując jego wartość podczas tranzycji
+        pomylimy się maksymalnie o 1.
+        \item Wynika z tego, że układ ten może być użyty tam, gdzie trzeba zliczać szybko i nieregularnie
+        następujące zdarzenia, na przykład rozpady promieniotwórcze w liczniku Geigera
+        \item Licznik w kodzie Gray'a może przydać się też podczas kontroli jakości przedmiotów, które
+        zawierają pewną liczbę stanów logicznych, przejście pomiędzy którymi ma pewien koszt. Przykładem może być
+        testowanie robotycznego ramienia sterowanego hydraulicznie we wszystkich pozycjach.
+    \end{enumerate}
+
+
+
+    \pagebreak
+    \section{Zadanie 3c}
+    Zadanie polega na zaprojektowaniu i zbudowaniu automatu wykrywającego sekwencję binarną "1101" odpowiadającą
+    literze "Q" z alfabetu Morse'a w oparciu o przerzutniki D.
+
+    \subsection{Idea}
+    Układ powinien mieć pojedyncze wyjście Q, oznaczające czy w rejestrze znajduje się oczekiwana wartość.
+    Wprowadzanie danych do układu powinno być jak najprostsze i możliwie intuicyjne - proponujemy dwa 
+    przyciski, odpowiadające "kropce" i "kresce"
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.3\linewidth]{images/q_idea.PNG}
+        \caption{Schemat ideowy automatu wykrywającego kod Morse'a litery Q
+        w strumieniu danych.}
+        \label{fig:q_idea}
+    \end{figure}
+
+    \subsection{Wprowadzanie danych}
+    Wprowadzanie danych do urządzenia można obsłużyć przy pomocy dwóch
+    szyn: szyny danych i szyny zegara. Przycisk "kropka" ustawia stan wysoki
+    na szynie zegara, a "kreska" - zarówno na zegarze, jak i na danych.
+    W ten sposób układ pracuje niezależnie od odstępów między kolejnymi naciśnięciami
+    przycisków.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\linewidth]{images/q_input.PNG}
+        \caption{Schemat układu pozwalającego wprowadzać dane do automatu}
+        \label{fig:q_input}
+    \end{figure}
+
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.3\linewidth]{images/q_input_plot.PNG}
+        \caption{Wykres stanów szyn danych i czasu podczas wprowadzania
+        sygnału}
+        \label{fig:q_idea_plot}
+    \end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
