@@ -261,8 +261,32 @@ stan rejestru jest taki sam jak na początku - odbył się pełen cykl.
 
 \section{Testy}
 
-TODO zrobić subcircuit comparator i dodać obrazek z comparatorem,
-wyglądem word generatora i outputem z sygnałów
+
+Dla przetestowania układu stworzono podpukład CMP\_8BIT, czyli komparator liczb 8 bitowych, 
+oparty na układzie N74F521N służący d porównywania liczb 8 bitowych.
+Wyjście komparatora działa tak jak w N74F521N w trybie active-low a zatem 0 na wyjściu
+oznacza równośc liczb.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/2b_test_cir.png}
+    \caption{Układ testowy}
+    \label{rys:2b_test_cir}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/2b_wg.png}
+    \caption{Generator słów}
+    \label{rys:2b_wg}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/2b_test_analyzer.png}
+    \caption{Analizator logiczny pokazujacy wynik testu - ciągłe 0 - liczby równe podczas każdego taktu zegara}
+    \label{rys:2b_test_analyzer}
+\end{figure}
 
 \section{Wnioski}
 
@@ -279,7 +303,5 @@ wyglądem word generatora i outputem z sygnałów
         się zgodnie z bitami krążącymi w rejestrze. Przesunięcia rejestru tworzą iluzję animacji na choince.
         
     \end{enumerate}
-
-\section{Podusmowanie}
 
 \end{document}
