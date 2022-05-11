@@ -30,6 +30,8 @@
 
 % drawing state machines
 \usepackage{tikz}
+% \documentclass[tikz, border=2mm]{standalone}
+\usepackage{karnaugh-map}
 \usetikzlibrary{automata, positioning, arrows}
 
 \tikzset{
@@ -395,6 +397,103 @@ initial text=$ $, % sets the text that appears on the start arrow
     W celu przniesienia logiki autmatu na przerzutniki D definujemy tabelę przejść.
     Do każdego stanu przydzielamy trzybitową nazwę zgodnie z kodem Graya aby nie trzeba było później zamieniać ich kolejności przy wpisywaniu do tabeli Karnaugh.
     Odpowiednio $ A \to  000 $, $ B \to  001$, $ C \to 011$, $ D \to 010$, $ E \to 110$.
+
+    \begin{table}[!htb]
+        \begin{minipage}{.5\linewidth}
+            \centering
+            \begin{tabular}{|c | c | c |} 
+            \hline
+            Stan & \multicolumn{2}{c|}{Wejście}\\
+            \hline
+            $Q_{2}Q_{1}Q_{0}$ & 0 & 1 \\ 
+            \hline
+            \hline
+            000(A) & 000(A) & 001(B) \\
+            \hline
+            001(B) & 000(A) & 011(C) \\
+            \hline
+            011(C) & 010(D) & 011(C) \\
+            \hline
+            010(D) & 000(A) & 110(E) \\
+            \hline
+            110(E) & 000(A) & 011(C) \\
+            \hline
+            111 & X & X\\
+            \hline
+            101 & X & X\\
+            \hline
+            100 & X & X \\
+            \hline
+            \end{tabular}
+            \caption{Tabela przejść automatu}
+        \end{minipage}%
+        \begin{minipage}{.5\linewidth}
+            \centering
+            \begin{tabular}{|c | c |} 
+            \hline
+            Stan & Wejście\\
+            \hline
+            $Q_{2}Q_{1}Q_{0}$ & 0 \\ 
+            \hline
+            \hline
+            000(A) & 0 \\
+            \hline
+            001(B) & 0 \\
+            \hline
+            011(C) & 0 \\
+            \hline
+            010(D) & 0 \\
+            \hline
+            110(E) & 1 \\
+            \hline
+            111 & X \\
+            \hline
+            101 & X \\
+            \hline
+            100 & X \\
+            \hline
+            \end{tabular}
+            \caption{Tabela akceptacji automatu}
+        \end{minipage} 
+    \end{table}
+
+    Trzy ostatnie stany pozostawiamy niezdefiniowane.
+    \begin{figure}[H]
+        \begin{minipage}{.5\linewidth}
+            \begin{karnaugh-map}[4][4][1][$Q_{0}X$][$Q_{2}Q_{1}$]
+                \manualterms{0, 1, 0, 1, 0, 0, 0, 1, X, X, X, X, 0, 1, X, X}
+                \implicant{1}{11}
+                \implicant{4}{5}
+            \end{karnaugh-map}
+            \caption{D0}
+        \end{minipage}
+        \begin{minipage}{.5\linewidth}
+            \begin{karnaugh-map}[4][4][1][$Q_{0}X$][$Q_{2}Q_{1}$]
+                \manualterms{0,0,1,0,1,1,1,0,X,X,X,X,0,1,X,X}
+                \implicant{4}{5}
+                \implicant{5}{13}
+                \implicant{2}{10}
+            \end{karnaugh-map}
+            \caption{D1}
+        \end{minipage}
+        \begin{minipage}{1\linewidth}
+            \centering
+            \begin{karnaugh-map}[4][4][1][$Q_{0}X$][$Q_{2}Q_{1}$]
+                \manualterms{0,0,0,0,0,1,0,0,X,X,X,X,0,0,X,X}
+                \implicant{5}{5}
+            \end{karnaugh-map}
+            \caption{D2}
+        \end{minipage}
+    \end{figure}
+
+    Z powyższych tabel można odczytać wzory które pozwolą na zbudowanie układu.
+
+    \begin{align*} 
+        D_{0} &=  X \overline{(\overline{Q_{2}}Q_{1}\overline{Q_{0}})} = X (Q_{2}+\overline{Q_{1}}+Q_{0}) \\ 
+        D_{1} &=  Q_{0}+\overline{Q_0} X Q_{1} + \overline{Q_0} Q_{1} \overline{Q_2} \\
+        D_{2} &= Q_{0}XQ_{1}\overline{Q_{2}} \\
+        Y &= Q_{2}
+    \end{align*}
 
     \subsection{Wprowadzanie danych}
     Wprowadzanie danych do urządzenia można obsłużyć przy pomocy dwóch
