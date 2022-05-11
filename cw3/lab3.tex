@@ -28,6 +28,18 @@
 
 \usepackage{tikz-timing}
 
+% drawing state machines
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\tikzset{
+->, % makes the edges directed
+>=stealth, % makes the arrow heads bold
+node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+initial text=$ $, % sets the text that appears on the start arrow
+}
+
 
 
 \hypersetup{
@@ -309,13 +321,14 @@
 
     \pagebreak
     \section{Zadanie 3c}
-    Zadanie polega na zaprojektowaniu i zbudowaniu automatu wykrywającego sekwencję binarną "1101" odpowiadającą
+    Naszym celem jest zaprojektowanie, przetestowanie i znalezienie zastosowań automatu wykrywającego sekwencję binarną "1101" odpowiadającą
     literze "Q" z alfabetu Morse'a w oparciu o przerzutniki D.
 
     \subsection{Idea}
     Układ powinien mieć pojedyncze wyjście Q, oznaczające czy w rejestrze znajduje się oczekiwana wartość.
     Wprowadzanie danych do układu powinno być jak najprostsze i możliwie intuicyjne - proponujemy dwa 
     przyciski, odpowiadające "kropce" i "kresce"
+
 
     \begin{figure}[h]
         \centering
@@ -324,6 +337,64 @@
         w strumieniu danych.}
         \label{fig:q_idea}
     \end{figure}
+
+    \subsection{Rozwiązanie teoretyczne}
+    Podany problem można rozwiązać stosująć automat Moore'a lub automat Mealy'ego.
+    Ponieważ zależy nam na łatwości testowania zastosujemy automat Moore'a, którego wyjście jest funkcją wyłącznie stanu wewnętrzengo.
+
+    Rozwiązanie zadania należy zacząć od zdefiniowania automatu deterministycznego nad alfabetem $ A =  \{a, b\} $, który znajdzie się w stanie akceptującym po otrzymaniu sekwencji $ 1101 $.
+    
+    Konstrujemy najprostrzy, częściowo uzupełniony automat akceptujący $1101$ i patrzymy czy da się go uzupełnić aby działał dla dłuższych sekwencji.
+
+    \begin{figure}[h!] 
+        \centering 
+        \begin{tikzpicture}
+            \node[state, initial] (A) {$A$};
+            \node[state, right of=A] (B) {$B$};
+            \node[state, right of=B] (C) {$C$};
+            \node[state, right of=C] (D) {$D$};
+            \node[state, accepting, right of=D] (E) {$E$};
+            \draw 
+                (A) edge[bend left, above] node{1} (B)
+                (B) edge[bend left, above] node{1} (C)
+                (C) edge[bend left, above] node{0} (D)
+                (D) edge[bend left, above] node{1} (E);
+        \end{tikzpicture}
+        \caption{Pierwsza propozycja automatu}
+        \label{fig:my_label}
+    \end{figure}
+
+    Uzupełniamy krawędzie tak aby powstał pełny deterministyczny automat skończony.
+
+    \begin{figure}[H] 
+        \centering 
+        \begin{tikzpicture}
+            \node[state, initial] (A) {$A$};
+            \node[state, right of=A] (B) {$B$};
+            \node[state, right of=B] (C) {$C$};
+            \node[state, right of=C] (D) {$D$};
+            \node[state, accepting, right of=D] (E) {$E$};
+            \draw 
+                (A) edge[loop above] node{0} (A)
+                (A) edge[bend left, above] node{1} (B)
+                (B) edge[bend left, above] node{1} (C)
+                (B) edge[bend left, above] node{0} (A)
+                (C) edge[loop above] node{0} (C)
+                (C) edge[bend left, above] node{0} (D)
+                (D) edge[bend left, above] node{1} (E)
+                (D) edge[bend left, above] node{0} (A)
+                (E) edge[bend left, above] node{0} (A)
+                (E) edge[bend left, above] node{1} (C);
+        \end{tikzpicture}
+        \caption{Ostateczny schemat automatu}
+        \label{fig:my_label}
+    \end{figure}
+
+    % TODO czy można to jakoś uzasadnić na tym etapie że automat jest ok, oprócz tego że "na logikę"
+
+    W celu przniesienia logiki autmatu na przerzutniki D definujemy tabelę przejść.
+    Do każdego stanu przydzielamy trzybitową nazwę zgodnie z kodem Graya aby nie trzeba było później zamieniać ich kolejności przy wpisywaniu do tabeli Karnaugh.
+    Odpowiednio $ A \to  000 $, $ B \to  001$, $ C \to 011$, $ D \to 010$, $ E \to 110$.
 
     \subsection{Wprowadzanie danych}
     Wprowadzanie danych do urządzenia można obsłużyć przy pomocy dwóch
