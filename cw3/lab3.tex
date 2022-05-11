@@ -100,6 +100,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \pagebreak
     \subsection{Rozwiązanie teoretyczne}
+    \label{solution}
     W implementacji dwójki liczącej należało użyć przerzutnika typu JK. Poniżej przedstawiono
     tabelę prawdy tego przerzutnika:
 
@@ -114,19 +115,29 @@ initial text=$ $, % sets the text that appears on the start arrow
             1 & 0 & 0 & 1 \\
             1 & 0 & 1 & 1 \\
             0 & 1 & 0 & 0 \\
-            \rowcolor{cyan}
-            0 & 1 & 1 & 0 \\
             \rowcolor{lime}
+            0 & 1 & 1 & 0 \\
+            \rowcolor{cyan}
             1 & 1 & 0 & 1 \\
             \rowcolor{lime}   
             1 & 1 & 1 & 0 \\ \hline        
         \end{tabular}
-        \caption{Tabela prawdy przerzutnika JK. Kolorami oznaczono stany, w których przerzutnik zmienia Q na przeciwne}
+        \caption{Tabela prawdy przerzutnika JK. \\Kolor niebieski to przejście $Q$ z 0 na 1, zielony - z 1 na 0}
         \label{tab:JK_truthtable}
     \end{table}
 
-    Szukamy funkcji J(Q) i K(Q). Warunek $Q_+ = \overline{Q}$ zachodzi, gdy $J(Q) = K(Q) = 1$ (zielony) lub gdy
-    $J(Q) = \overline{Q}$ i $K(Q) = Q$ (niebieski). Pierwsze rozwiązanie jest znacznie prostsze w implementacji,
+    Szukamy funkcji J(Q) i K(Q), która spełnia warunek $Q_+ = \overline{Q}$.
+    Warunek zachodzi dla każdej kombinacji wierszy zielonych z niebieskimi.
+    To znaczy, że rozwiązaniami są:
+    \begin{enumerate}
+        \item $J(Q) = \overline{Q},\; K(Q) = Q$ (wiersz 3. i 6.)
+        \item $J(Q) = 1,\; K(Q) = Q$ (wiersz 3. i 8.)
+        \item $J(Q) = \overline{Q},\; K(Q) = 1$ (wiersz 7. i 6.)
+        \item $J(Q) = 1,\; K(Q) = 1$ (wiersz 7. i 8.)
+    \end{enumerate}
+
+    
+    Rozwiązanie korzystające z wierszy 7. i 8. jest znacznie prostsze w implementacji,
     gdyż wymaga tylko podłączenia J i K wysoko.  Zatem schemat układu może wyglądać tak, jak na poniższym rysunku:
 
     \begin{figure}[h]
@@ -160,7 +171,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     Widać, że oczekiwany efekt zachodzi - wyjście Q zmienia stan na przeciwny przy impulsie zegara.
     Fala na wyjściu ma dwukrotnie większy okres, niż ta na wejściu.
 
-    \subsection{Wnioski}
+    \subsection{Zastosowania}
     \begin{enumerate}
         \item Dwójkę liczącą można zastosować do dwukrotnego zmniejszenia częstotliwości fali
         prostokątnej.
@@ -173,6 +184,11 @@ initial text=$ $, % sets the text that appears on the start arrow
         obróbkę produktu na dwie maszyny
     \end{enumerate}
 
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Dwójkę liczącą można zaimplementować także na inne sposoby wynikające z tabeli Karnough(\hyperref[solution]{patrz 1.2}).
+        W praktyce jednak wybraliśmy najprostyszy do skonstruowania.
+    \end{enumerate}
 
 
 
@@ -418,31 +434,4 @@ initial text=$ $, % sets the text that appears on the start arrow
         sygnału}
         \label{fig:q_idea_plot}
     \end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{document}

@@ -28,6 +28,18 @@
 
 \usepackage{tikz-timing}
 
+% drawing state machines
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\tikzset{
+->, % makes the edges directed
+>=stealth, % makes the arrow heads bold
+node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+initial text=$ $, % sets the text that appears on the start arrow
+}
+
 
 
 \hypersetup{
@@ -88,6 +100,7 @@
 
     \pagebreak
     \subsection{Rozwiązanie teoretyczne}
+    \label{solution}
     W implementacji dwójki liczącej należało użyć przerzutnika typu JK. Poniżej przedstawiono
     tabelę prawdy tego przerzutnika:
 
@@ -102,19 +115,29 @@
             1 & 0 & 0 & 1 \\
             1 & 0 & 1 & 1 \\
             0 & 1 & 0 & 0 \\
-            \rowcolor{cyan}
-            0 & 1 & 1 & 0 \\
             \rowcolor{lime}
+            0 & 1 & 1 & 0 \\
+            \rowcolor{cyan}
             1 & 1 & 0 & 1 \\
             \rowcolor{lime}   
             1 & 1 & 1 & 0 \\ \hline        
         \end{tabular}
-        \caption{Tabela prawdy przerzutnika JK. Kolorami oznaczono stany, w których przerzutnik zmienia Q na przeciwne}
+        \caption{Tabela prawdy przerzutnika JK. \\Kolor niebieski to przejście $Q$ z 0 na 1, zielony - z 1 na 0}
         \label{tab:JK_truthtable}
     \end{table}
 
-    Szukamy funkcji J(Q) i K(Q). Warunek $Q_+ = \overline{Q}$ zachodzi, gdy $J(Q) = K(Q) = 1$ (zielony) lub gdy
-    $J(Q) = \overline{Q}$ i $K(Q) = Q$ (niebieski). Pierwsze rozwiązanie jest znacznie prostsze w implementacji,
+    Szukamy funkcji J(Q) i K(Q), która spełnia warunek $Q_+ = \overline{Q}$.
+    Warunek zachodzi dla każdej kombinacji wierszy zielonych z niebieskimi.
+    To znaczy, że rozwiązaniami są:
+    \begin{enumerate}
+        \item $J(Q) = \overline{Q},\; K(Q) = Q$ (wiersz 3. i 6.)
+        \item $J(Q) = 1,\; K(Q) = Q$ (wiersz 3. i 8.)
+        \item $J(Q) = \overline{Q},\; K(Q) = 1$ (wiersz 7. i 6.)
+        \item $J(Q) = 1,\; K(Q) = 1$ (wiersz 7. i 8.)
+    \end{enumerate}
+
+    
+    Rozwiązanie korzystające z wierszy 7. i 8. jest znacznie prostsze w implementacji,
     gdyż wymaga tylko podłączenia J i K wysoko.  Zatem schemat układu może wyglądać tak, jak na poniższym rysunku:
 
     \begin{figure}[h]
@@ -148,7 +171,7 @@
     Widać, że oczekiwany efekt zachodzi - wyjście Q zmienia stan na przeciwny przy impulsie zegara.
     Fala na wyjściu ma dwukrotnie większy okres, niż ta na wejściu.
 
-    \subsection{Wnioski}
+    \subsection{Zastosowania}
     \begin{enumerate}
         \item Dwójkę liczącą można zastosować do dwukrotnego zmniejszenia częstotliwości fali
         prostokątnej.
@@ -161,6 +184,11 @@
         obróbkę produktu na dwie maszyny
     \end{enumerate}
 
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Dwójkę liczącą można zaimplementować także na inne sposoby wynikające z tabeli Karnough(\hyperref[solution]{patrz 1.2}).
+        W praktyce jednak wybraliśmy najprostyszy do skonstruowania.
+    \end{enumerate}
 
 
 
@@ -309,13 +337,14 @@
 
     \pagebreak
     \section{Zadanie 3c}
-    Zadanie polega na zaprojektowaniu i zbudowaniu automatu wykrywającego sekwencję binarną "1101" odpowiadającą
+    Naszym celem jest zaprojektowanie, przetestowanie i znalezienie zastosowań automatu wykrywającego sekwencję binarną "1101" odpowiadającą
     literze "Q" z alfabetu Morse'a w oparciu o przerzutniki D.
 
     \subsection{Idea}
     Układ powinien mieć pojedyncze wyjście Q, oznaczające czy w rejestrze znajduje się oczekiwana wartość.
     Wprowadzanie danych do układu powinno być jak najprostsze i możliwie intuicyjne - proponujemy dwa 
     przyciski, odpowiadające "kropce" i "kresce"
+
 
     \begin{figure}[h]
         \centering
@@ -324,6 +353,64 @@
         w strumieniu danych.}
         \label{fig:q_idea}
     \end{figure}
+
+    \subsection{Rozwiązanie teoretyczne}
+    Podany problem można rozwiązać stosująć automat Moore'a lub automat Mealy'ego.
+    Ponieważ zależy nam na łatwości testowania zastosujemy automat Moore'a, którego wyjście jest funkcją wyłącznie stanu wewnętrzengo.
+
+    Rozwiązanie zadania należy zacząć od zdefiniowania automatu deterministycznego nad alfabetem $ A =  \{a, b\} $, który znajdzie się w stanie akceptującym po otrzymaniu sekwencji $ 1101 $.
+    
+    Konstrujemy najprostrzy, częściowo uzupełniony automat akceptujący $1101$ i patrzymy czy da się go uzupełnić aby działał dla dłuższych sekwencji.
+
+    \begin{figure}[h!] 
+        \centering 
+        \begin{tikzpicture}
+            \node[state, initial] (A) {$A$};
+            \node[state, right of=A] (B) {$B$};
+            \node[state, right of=B] (C) {$C$};
+            \node[state, right of=C] (D) {$D$};
+            \node[state, accepting, right of=D] (E) {$E$};
+            \draw 
+                (A) edge[bend left, above] node{1} (B)
+                (B) edge[bend left, above] node{1} (C)
+                (C) edge[bend left, above] node{0} (D)
+                (D) edge[bend left, above] node{1} (E);
+        \end{tikzpicture}
+        \caption{Pierwsza propozycja automatu}
+        \label{fig:my_label}
+    \end{figure}
+
+    Uzupełniamy krawędzie tak aby powstał pełny deterministyczny automat skończony.
+
+    \begin{figure}[H] 
+        \centering 
+        \begin{tikzpicture}
+            \node[state, initial] (A) {$A$};
+            \node[state, right of=A] (B) {$B$};
+            \node[state, right of=B] (C) {$C$};
+            \node[state, right of=C] (D) {$D$};
+            \node[state, accepting, right of=D] (E) {$E$};
+            \draw 
+                (A) edge[loop above] node{0} (A)
+                (A) edge[bend left, above] node{1} (B)
+                (B) edge[bend left, above] node{1} (C)
+                (B) edge[bend left, above] node{0} (A)
+                (C) edge[loop above] node{0} (C)
+                (C) edge[bend left, above] node{0} (D)
+                (D) edge[bend left, above] node{1} (E)
+                (D) edge[bend left, above] node{0} (A)
+                (E) edge[bend left, above] node{0} (A)
+                (E) edge[bend left, above] node{1} (C);
+        \end{tikzpicture}
+        \caption{Ostateczny schemat automatu}
+        \label{fig:my_label}
+    \end{figure}
+
+    % TODO czy można to jakoś uzasadnić na tym etapie że automat jest ok, oprócz tego że "na logikę"
+
+    W celu przniesienia logiki autmatu na przerzutniki D definujemy tabelę przejść.
+    Do każdego stanu przydzielamy trzybitową nazwę zgodnie z kodem Graya aby nie trzeba było później zamieniać ich kolejności przy wpisywaniu do tabeli Karnaugh.
+    Odpowiednio $ A \to  000 $, $ B \to  001$, $ C \to 011$, $ D \to 010$, $ E \to 110$.
 
     \subsection{Wprowadzanie danych}
     Wprowadzanie danych do urządzenia można obsłużyć przy pomocy dwóch
@@ -347,31 +434,4 @@
         sygnału}
         \label{fig:q_idea_plot}
     \end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{document}
