@@ -82,9 +82,9 @@ initial text=$ $, % sets the text that appears on the start arrow
     impulsach zegara, a dokładniej przy przejściu ze stanu niskiego na wysoki,
     stan wyjścia Q jest zmieniany na przeciwny.
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
-        \includegraphics[width=.3\linewidth]{images/dwojka_liczaca.PNG}
+        \includegraphics[width=1\linewidth]{images/dwojka_liczaca.PNG}
         \caption{Schemat koncepcyjny dwójki liczącej}
         \label{fig:dwojka_koncepcja}
     \end{figure}
@@ -103,6 +103,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \pagebreak
     \subsection{Rozwiązanie teoretyczne}
+    \label{solution}
     W implementacji dwójki liczącej należało użyć przerzutnika typu JK. Poniżej przedstawiono
     tabelę prawdy tego przerzutnika:
 
@@ -117,19 +118,29 @@ initial text=$ $, % sets the text that appears on the start arrow
             1 & 0 & 0 & 1 \\
             1 & 0 & 1 & 1 \\
             0 & 1 & 0 & 0 \\
-            \rowcolor{cyan}
-            0 & 1 & 1 & 0 \\
             \rowcolor{lime}
+            0 & 1 & 1 & 0 \\
+            \rowcolor{cyan}
             1 & 1 & 0 & 1 \\
             \rowcolor{lime}   
             1 & 1 & 1 & 0 \\ \hline        
         \end{tabular}
-        \caption{Tabela prawdy przerzutnika JK. Kolorami oznaczono stany, w których przerzutnik zmienia Q na przeciwne}
+        \caption{Tabela prawdy przerzutnika JK. \\Kolor niebieski to przejście $Q$ z 0 na 1, zielony - z 1 na 0}
         \label{tab:JK_truthtable}
     \end{table}
 
-    Szukamy funkcji J(Q) i K(Q). Warunek $Q_+ = \overline{Q}$ zachodzi, gdy $J(Q) = K(Q) = 1$ (zielony) lub gdy
-    $J(Q) = \overline{Q}$ i $K(Q) = Q$ (niebieski). Pierwsze rozwiązanie jest znacznie prostsze w implementacji,
+    Szukamy funkcji J(Q) i K(Q), która spełnia warunek $Q_+ = \overline{Q}$.
+    Warunek zachodzi dla każdej kombinacji wierszy zielonych z niebieskimi.
+    To znaczy, że rozwiązaniami są:
+    \begin{enumerate}
+        \item $J(Q) = \overline{Q},\; K(Q) = Q$ (wiersz 3. i 6.)
+        \item $J(Q) = 1,\; K(Q) = Q$ (wiersz 3. i 8.)
+        \item $J(Q) = \overline{Q},\; K(Q) = 1$ (wiersz 7. i 6.)
+        \item $J(Q) = 1,\; K(Q) = 1$ (wiersz 7. i 8.)
+    \end{enumerate}
+
+    
+    Rozwiązanie korzystające z wierszy 7. i 8. jest znacznie prostsze w implementacji,
     gdyż wymaga tylko podłączenia J i K wysoko.  Zatem schemat układu może wyglądać tak, jak na poniższym rysunku:
 
     \begin{figure}[h]
@@ -146,14 +157,14 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.5\linewidth]{images/dwojka_test.PNG}
+        \includegraphics[width=1\linewidth]{images/dwojka_test.PNG}
         \caption{Schemat układu testującego}
         \label{fig:dwojka_test}
     \end{figure}
 
     Przeprowadzono symulację i uzyskano następujące dane na analizatorze:
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{images/dwolka_xla.PNG}
         \caption{Wykresy stanów na ekranie analizatora}
@@ -163,7 +174,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     Widać, że oczekiwany efekt zachodzi - wyjście Q zmienia stan na przeciwny przy impulsie zegara.
     Fala na wyjściu ma dwukrotnie większy okres, niż ta na wejściu.
 
-    \subsection{Wnioski}
+    \subsection{Zastosowania}
     \begin{enumerate}
         \item Dwójkę liczącą można zastosować do dwukrotnego zmniejszenia częstotliwości fali
         prostokątnej.
@@ -176,6 +187,11 @@ initial text=$ $, % sets the text that appears on the start arrow
         obróbkę produktu na dwie maszyny
     \end{enumerate}
 
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Dwójkę liczącą można zaimplementować także na inne sposoby wynikające z tabeli Karnough(\hyperref[solution]{patrz 1.2}).
+        W praktyce jednak wybraliśmy najprostyszy do skonstruowania.
+    \end{enumerate}
 
 
 
@@ -188,9 +204,9 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \subsection{Idea}
     Układ docelowy powinien posiadać wejście zegara CLK oraz cztery wyjścia
-    $G_1, G_2, G_3, G_4$ odwzorowywujące cyfry czterobitowej liczby zapisanej w kodzie Gray'a.
+    $Q_1, Q_2, Q_3, Q_4$ odwzorowywujące cyfry czterobitowej liczby zapisanej w kodzie Gray'a.
     Przy impulsie zegara, wyjście powinno przestawiać się na kolejną liczbę, a z ostatniego
-    stanu $1111_2 = 1000_G$ wrócić na początkowy - $0000_2 = 0000_G$.
+    stanu $1111_2 = 1000_Q$ wrócić na początkowy - $0000_2 = 0000_Q$.
 
     \begin{figure}[h]
         \centering
@@ -203,7 +219,7 @@ initial text=$ $, % sets the text that appears on the start arrow
         \centering
         \begin{tabular}{|cc|cc|cc|cc|}
             \hline
-            $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ \\
+            $n$ & $Q_3Q_2Q_1Q_0 $ & $n$ & $Q_3Q_2Q_1Q_0 $ & $n$ & $Q_3Q_2Q_1Q_0 $ & $n$ & $Q_3Q_2Q_1Q_0 $ \\
             \hline
             0 & 0000 & 4 & 0110 & 8  & 1100 & 12 & 1010 \\
             1 & 0001 & 5 & 0111 & 9  & 1101 & 13 & 1011 \\
@@ -251,7 +267,8 @@ initial text=$ $, % sets the text that appears on the start arrow
     \end{table}
     
     \subsubsection{Wyprowadzenie funkcji logicznych}
-    Stosując tabele Karnough przedstawione \textbf{na kolejnej stronie}, wyprowadzono wzory na $T_0, \dots, T_3$:
+    Stosując tabele Karnough przedstawione \textbf{na kolejnej stronie}, wyprowadzono wzory na $T_0, \dots, T_3$ 
+    (wykorzystujemy to, że zanegowany $XOR$ to równoważność):
     \begin{align*}
         T_0 &= \overline{(Q_1 \oplus Q_3) \cdot (Q_0 \oplus Q_2)} \\
         T_1 &= Q_0 \cdot \overline{(Q_3 \oplus (Q_1 \oplus Q_2))} \\
@@ -364,7 +381,7 @@ initial text=$ $, % sets the text that appears on the start arrow
                 (D) edge[bend left, above] node{1} (E);
         \end{tikzpicture}
         \caption{Pierwsza propozycja automatu}
-        \label{fig:my_label}
+        \label{simple_automata}
     \end{figure}
 
     Uzupełniamy krawędzie tak aby powstał pełny deterministyczny automat skończony.
@@ -390,7 +407,7 @@ initial text=$ $, % sets the text that appears on the start arrow
                 (E) edge[bend left, above] node{1} (C);
         \end{tikzpicture}
         \caption{Ostateczny schemat automatu}
-        \label{fig:my_label}
+        \label{complex_automata}
     \end{figure}
 
     % TODO czy można to jakoś uzasadnić na tym etapie że automat jest ok, oprócz tego że "na logikę"
@@ -518,31 +535,4 @@ initial text=$ $, % sets the text that appears on the start arrow
         sygnału}
         \label{fig:q_idea_plot}
     \end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{document}
