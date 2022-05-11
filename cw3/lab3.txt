@@ -156,7 +156,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.5\linewidth]{images/dwojka_test.PNG}
+        \includegraphics[width=1\linewidth]{images/dwojka_test.PNG}
         \caption{Schemat układu testującego}
         \label{fig:dwojka_test}
     \end{figure}
