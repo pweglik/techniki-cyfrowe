@@ -78,7 +78,8 @@ initial text=$ $, % sets the text that appears on the start arrow
     asynchronicznego licznika modulo 8.
 
     \subsection{Idea}
-    Dwójka licząca to układ, który posiada wejście zegarowe CLK i wyjćsie Q. Przy kolejnych
+    \subsubsection{Dwójka licząca}
+    Dwójka licząca to układ, który posiada wejście zegarowe CLK i wyjście Q. Przy kolejnych
     impulsach zegara, a dokładniej przy przejściu ze stanu niskiego na wysoki,
     stan wyjścia Q jest zmieniany na przeciwny.
 
@@ -100,9 +101,43 @@ initial text=$ $, % sets the text that appears on the start arrow
         \caption{Oczekiwana tabela prawdy układu. Spełnia on równanie $Q_+ = \overline{Q}$}
         \label{tab:dwojka_truthtable}
     \end{table}
+    \subsubsection{Licznik modulo 8}
+    Dwójka licząca to układ, który posiada wejście zegarowe CLK i 
+    wyjścia $Q_0$, $Q_1$, $Q_2$. Przy kolejnych
+    impulsach zegara, a dokładniej przy przejściu ze stanu niskiego na wysoki,
+    stan wyjścia zmieniany jest na kolejną liczbę binarną. Układ liczy do 8 w systemie
+    dwójkowym, a potem wraca do 0.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\linewidth]{images/dwojka_liczaca.PNG}
+        \caption{Schemat koncepcyjny licznika modulo 8}
+        \label{fig:mod8_koncepcja}
+    \end{figure}
+
+    \begin{table}[h]
+        \centering
+        \begin{tabular}{|ccc|ccc|}
+            \hline
+            $Q_0$ & $Q_1$ & $Q_2$ & $Q_0+$ & $Q_1+$ & $Q_2+$ \\
+            \hline
+            0 & 0 & 0 & 0 & 0 & 1\\
+            0 & 0 & 1 & 0 & 1 & 0\\ 
+            0 & 1 & 0 & 0 & 1 & 1\\
+            0 & 1 & 1 & 1 & 0 & 0\\ 
+            1 & 0 & 0 & 1 & 0 & 1\\
+            1 & 0 & 1 & 1 & 1 & 0\\ 
+            1 & 1 & 0 & 1 & 1 & 1\\
+            1 & 1 & 1 & 0 & 0 & 0\\ 
+            \hline
+        \end{tabular}
+        \caption{Tabela przedstawiające kolejne przejścia licznika modulo 8}
+        \label{tab:mod8_truthtable}
+    \end{table}
 
     \pagebreak
     \subsection{Rozwiązanie teoretyczne}
+    \subsubsection{Dwójka licząca}
     \label{solution}
     W implementacji dwójki liczącej należało użyć przerzutnika typu JK. Poniżej przedstawiono
     tabelę prawdy tego przerzutnika:
@@ -143,15 +178,33 @@ initial text=$ $, % sets the text that appears on the start arrow
     Rozwiązanie korzystające z wierszy 7. i 8. jest znacznie prostsze w implementacji,
     gdyż wymaga tylko podłączenia J i K wysoko.  Zatem schemat układu może wyglądać tak, jak na poniższym rysunku:
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.7\linewidth]{images/dwojka_schemat.PNG}
         \caption{Schemat układu dwójki liczącej}
         \label{fig:dwojka_schemat}
     \end{figure}
 
+    \subsubsection{Licznik modulo 8}
+    Zauważmy, że najmłodszy bit zmienia swój stan w każdym takcie zegara, a każdy
+    kolejny zmienia się tylko wtedy gdy poprzedni bit zmienia się z 1 na 0. Oddaje
+    to naturę liczenia w systemie binarnym.
+    (\hyperref[tab:mod8_truthtable]{Patrz tabela \ref{tab:mod8_truthtable}}).
+    Oznacza to, że o implementacji licznika modulo 8 można użyć 3 dwójek liczących, gdzie
+    każda dwójka reprezentuje 1 bit liczby 3 bitowej. Zanegowane wyjścia dwójki reprentującej
+    młodszy bit podepniey do wejścia zegara dwójki starszej. W ten sposób każda kolejna
+    dwójka licząca zmieni swój stan wtedy, kiedy w poprzedniej zaszła zmiana stanu z 1 na 0.
+    A zatem schemat takiego układu może wygladać jak poniżej:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1.05\linewidth]{images/mod8_schematic.PNG}
+        \caption{Schemat układu licznika modulo 8}
+        \label{fig:mod8_schemat}
+    \end{figure}
+
     \pagebreak
     \subsection{Symulacja w programie Multisim}
+    \subsubsection{Dwójka licząca}
     W programie Multisim stworzono następujący układ testowy składający się ze źródła fali
     prostokątnej, dwójki liczącej, generatora słów binarnych oraz analizatora stanów logicznych:
 
@@ -162,17 +215,48 @@ initial text=$ $, % sets the text that appears on the start arrow
         \label{fig:dwojka_test}
     \end{figure}
 
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=1\linewidth]{images/dwojka_xwg.PNG}
+        \caption{Stan generatora słów}
+        \label{fig:dwojka_xwg}
+    \end{figure}
+
     Przeprowadzono symulację i uzyskano następujące dane na analizatorze:
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{images/dwolka_xla.PNG}
+        \includegraphics[width=\linewidth]{images/dwojka_xla.PNG}
         \caption{Wykresy stanów na ekranie analizatora}
         \label{fig:dwojka_xla}
     \end{figure}
 
     Widać, że oczekiwany efekt zachodzi - wyjście Q zmienia stan na przeciwny przy impulsie zegara.
     Fala na wyjściu ma dwukrotnie większy okres, niż ta na wejściu.
+
+    \subsubsection{Licznik modulo 8}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=1\linewidth]{images/mod8_testy.PNG}
+        \caption{Schemat układu testującego}
+        \label{fig:mod8_testy}
+    \end{figure}
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=1\linewidth]{images/mod8_xwg.PNG}
+        \caption{Stan generatora słów}
+        \label{fig:mod8_xwg}
+    \end{figure}
+    Przeprowadzono symulację i uzyskano następujące dane na analizatorze:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\linewidth]{images/mod8_xla.PNG}
+        \caption{Wykresy stanów na ekranie analizatora}
+        \label{fig:mod8_xla}
+    \end{figure}
 
     \subsection{Zastosowania}
     \begin{enumerate}
@@ -381,7 +465,7 @@ initial text=$ $, % sets the text that appears on the start arrow
                 (D) edge[bend left, above] node{1} (E);
         \end{tikzpicture}
         \caption{Pierwsza propozycja automatu}
-        \label{simple_automata}
+        \label{fig:simple_automata}
     \end{figure}
 
     Uzupełniamy krawędzie tak aby powstał pełny deterministyczny automat skończony.
@@ -407,7 +491,7 @@ initial text=$ $, % sets the text that appears on the start arrow
                 (E) edge[bend left, above] node{1} (C);
         \end{tikzpicture}
         \caption{Ostateczny schemat automatu}
-        \label{complex_automata}
+        \label{fig:complex_automata}
     \end{figure}
 
     % TODO czy można to jakoś uzasadnić na tym etapie że automat jest ok, oprócz tego że "na logikę"
