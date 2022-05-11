@@ -81,7 +81,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     impulsach zegara, a dokładniej przy przejściu ze stanu niskiego na wysoki,
     stan wyjścia Q jest zmieniany na przeciwny.
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=1\linewidth]{images/dwojka_liczaca.PNG}
         \caption{Schemat koncepcyjny dwójki liczącej}
@@ -163,7 +163,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     Przeprowadzono symulację i uzyskano następujące dane na analizatorze:
 
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=\linewidth]{images/dwolka_xla.PNG}
         \caption{Wykresy stanów na ekranie analizatora}
@@ -203,9 +203,9 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \subsection{Idea}
     Układ docelowy powinien posiadać wejście zegara CLK oraz cztery wyjścia
-    $G_1, G_2, G_3, G_4$ odwzorowywujące cyfry czterobitowej liczby zapisanej w kodzie Gray'a.
+    $Q_1, Q_2, Q_3, Q_4$ odwzorowywujące cyfry czterobitowej liczby zapisanej w kodzie Gray'a.
     Przy impulsie zegara, wyjście powinno przestawiać się na kolejną liczbę, a z ostatniego
-    stanu $1111_2 = 1000_G$ wrócić na początkowy - $0000_2 = 0000_G$.
+    stanu $1111_2 = 1000_Q$ wrócić na początkowy - $0000_2 = 0000_Q$.
 
     \begin{figure}[h]
         \centering
@@ -218,7 +218,7 @@ initial text=$ $, % sets the text that appears on the start arrow
         \centering
         \begin{tabular}{|cc|cc|cc|cc|}
             \hline
-            $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ & $n$ & $G_3G_2G_1G_0 $ \\
+            $n$ & $Q_3Q_2Q_1Q_0 $ & $n$ & $Q_3Q_2Q_1Q_0 $ & $n$ & $Q_3Q_2Q_1Q_0 $ & $n$ & $Q_3Q_2Q_1Q_0 $ \\
             \hline
             0 & 0000 & 4 & 0110 & 8  & 1100 & 12 & 1010 \\
             1 & 0001 & 5 & 0111 & 9  & 1101 & 13 & 1011 \\
@@ -266,7 +266,8 @@ initial text=$ $, % sets the text that appears on the start arrow
     \end{table}
     
     \subsubsection{Wyprowadzenie funkcji logicznych}
-    Stosując tabele Karnough przedstawione \textbf{na kolejnej stronie}, wyprowadzono wzory na $T_0, \dots, T_3$:
+    Stosując tabele Karnough przedstawione \textbf{na kolejnej stronie}, wyprowadzono wzory na $T_0, \dots, T_3$ 
+    (wykorzystujemy to, że zanegowany $XOR$ to równoważność):
     \begin{align*}
         T_0 &= \overline{(Q_1 \oplus Q_3) \cdot (Q_0 \oplus Q_2)} \\
         T_1 &= Q_0 \cdot \overline{(Q_3 \oplus (Q_1 \oplus Q_2))} \\
