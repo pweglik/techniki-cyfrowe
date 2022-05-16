@@ -27,6 +27,7 @@
 \usepackage{booktabs}
 
 \usepackage{tikz-timing}
+
 \usepackage{xcolor}
 
 % drawing state machines
@@ -591,9 +592,9 @@ initial text=$ $, % sets the text that appears on the start arrow
     Z powyższych tabel można odczytać wzory które pozwolą na zbudowanie układu.
 
     \begin{align*} 
-        D_{0} &=  X \overline{(\overline{Q_{2}}Q_{1}\overline{Q_{0}})} = X (Q_{2}+\overline{Q_{1}}+Q_{0}) \\ 
-        D_{1} &=  \overline{Q_0} X Q_{1} + \overline{X}Q_0Q_1+\overline{Q_2}Q_0X\\
-        D_{2} &= Q_{0}XQ_{1}\overline{Q_{2}} \\
+        D_{0} &=  \color{red}{X} \color{green}\overline{(\overline{Q_{2}}Q_{1}\overline{Q_{0}})} \color{black}= X (Q_{2}+\overline{Q_{1}}+Q_{0}) \\ 
+        D_{1} &=  {\color{green}\overline{Q_0} X Q_{1}} + {\color{olive}\overline{X}Q_0Q_1}+{\color{red}\overline{Q_2}Q_0X}\\
+        D_{2} &= {\color{red}Q_{0}XQ_{1}\overline{Q_{2}}} \\
         Y &= Q_{2}
     \end{align*}
 
