@@ -302,7 +302,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \begin{figure}[h]
         \centering
-        \includegraphics[]{images/gray_idea.PNG}
+        \includegraphics[width=\linewidth]{images/gray_idea.PNG}
         \caption{Schemat koncepcyjny licznika w kodzie Gray'a}
         \label{fig:gray_idea}
     \end{figure}
@@ -381,7 +381,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     Po podłączeniu wszystkich wejść $T_i$ według planu, otrzymujemy następujący schemat:
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.85\linewidth]{images/gray_schematic.PNG}
+        \includegraphics[width=1.1\linewidth]{images/gray_schematic.PNG}
         \caption{Schemat czterobitowego licznika liczącego w kodzie Gray'a}
         \label{fig:gray_schemat}
     \end{figure}
@@ -407,7 +407,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     \end{figure}
 
     Poniżej przedstawiono wykres wygenerowany przez analizator stanów logicznych:
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.9\linewidth]{images/gray_xla.PNG}
         \caption{Przebieg stanów logicznych podczas 16 cykli zegara}
@@ -633,11 +633,24 @@ initial text=$ $, % sets the text that appears on the start arrow
     \end{figure}
 
 
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Istnieją różne sposoby wprowadzania danych. 
+        Zdecydowaliśmy się na dwa przyciski odpowiadające kropce i kresce, czego skutkiem jest konieczność opóźniania sygnału aby wyjście się ustabilizowało.
+        Alternatywnie można było użyć dwóch przełączników, gdzie jeden odpowiada za dane a drugi potwierdza wprowadzenie.
+        Takie rozwiązanie pomimo że skutkuje prostrzym układem jest mało intuicyjne w użytkowaniu.
+        \item Opóźnienie można najprościej zaimplementować szeregowo połączonymi bramkami które razem nie modyfikuja wartości logicznej.
+        Bardziej typowym rozwiązaniem jest zastosowanie opóźnienia w oparciu o układ RC, kosztem większego skomplikowania schematu.
+    \end{enumerate}
+
     \subsection{Zastosowania}
     \begin{enumerate}
-        \item Najbardziej oczywistym zastosowaniem takiego układu jest 
-        dekoder kodu Morse'a. Konieczne byłoby zaimplementowanie
-        analogicznego układu dla każdej litery.
+        \item Pokazany układ wykrywa sekwencje odpowiadającą literze Q w alfabecie Morse'a.
+        Po skonstruowaniu w analogiczny sposób układów dla każdej litery można zbudowac urządzenie, które tłumaczy wiadomość.
+        \item Można zmodyfikować układ aby wykrywał sekwencję odpowiadającą SOS i zbudować urządzenie, które
+        po podpięciu do radia może włączać alarm kiedy ktoś nada taki sygnał.
+        \item Można układ połączyć z dzwonkiem do drzwi i elektronicznym zamkiem, 
+        który umożliwia otworzenie drzwi jedynie osobom które znają sekwencję.
     \end{enumerate}
 
     \subsection{Wnioski}
