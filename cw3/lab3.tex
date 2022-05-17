@@ -633,11 +633,24 @@ initial text=$ $, % sets the text that appears on the start arrow
     \end{figure}
 
 
+    \subsection{Wnioski}
+    \begin{enumerate}
+        \item Istnieją różne sposoby wprowadzania danych. 
+        Zdecydowaliśmy się na dwa przyciski odpowiadające kropce i kresce, czego skutkiem jest konieczność opóźniania sygnału aby wyjście się ustabilizowało.
+        Alternatywnie można było użyć dwóch przełączników, gdzie jeden odpowiada za dane a drugi potwierdza wprowadzenie.
+        Takie rozwiązanie pomimo że skutkuje prostrzym układem jest mało intuicyjne w użytkowaniu.
+        \item Opóźnienie można najprościej zaimplementować szeregowo połączonymi bramkami które razem nie modyfikuja wartości logicznej.
+        Bardziej typowym rozwiązaniem jest zastosowanie opóźnienia w oparciu o układ RC, kosztem większego skomplikowania schematu.
+    \end{enumerate}
+
     \subsection{Zastosowania}
     \begin{enumerate}
-        \item Najbardziej oczywistym zastosowaniem takiego układu jest 
-        dekoder kodu Morse'a. Konieczne byłoby zaimplementowanie
-        analogicznego układu dla każdej litery.
+        \item Pokazany układ wykrywa sekwencje odpowiadającą literze Q w alfabecie Morse'a.
+        Po skonstruowaniu w analogiczny sposób układów dla każdej litery można zbudowac urządzenie, które tłumaczy wiadomość.
+        \item Można zmodyfikować układ aby wykrywał sekwencję odpowiadającą SOS i zbudować urządzenie, które
+        po podpięciu do radia może włączać alarm kiedy ktoś nada taki sygnał.
+        \item Można układ połączyć z dzwonkiem do drzwi i elektronicznym zamkiem, 
+        który umożliwia otworzenie drzwi jedynie osobom które znają sekwencję.
     \end{enumerate}
 
     \subsection{Wnioski}
