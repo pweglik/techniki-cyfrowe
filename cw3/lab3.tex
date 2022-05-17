@@ -652,7 +652,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \subsection{Projektowanie układu}
 
-    Wzory jeszcze wzory
+    Wzory wyznaczone wyżej
     \begin{align*} 
         D_{0} &=  X \overline{(\overline{Q_{2}}Q_{1}\overline{Q_{0}})} = X (Q_{2}+\overline{Q_{1}}+Q_{0}) \\ 
         D_{1} &=  \overline{Q_0} X Q_{1} + \overline{X}Q_0Q_1+\overline{Q_2}Q_0X\\
@@ -669,7 +669,12 @@ initial text=$ $, % sets the text that appears on the start arrow
     W układnie korzystamy z trzech przerzutników D.
     Sposób podłączenia można bezpośrednio wywnioskować ze wzoru.
     Wzór na $ D_i $ mówi co należy podłączyć do wejścia $d$ przerzutnika $i$.
-    $Q_i$ to wartość wyjścia $q$ przerzutnika $i$.
+    $Q_i$ to wartość wyjścia $q$ przerzutnika $i$. 
+    Wyjście układu należy podłączyć od wyjścia ostatniego przerzutnika.
+    Piny zegara łączymy ze spólnym pinem zegara układu.
+
+    W celu dodania możliwości prostego resetowania układu do stanu początkowego łączymy
+    piny reset na przerzutnikach z pinem resetowania układu.
 
 
     \subsection{Wnioski}
@@ -686,14 +691,14 @@ initial text=$ $, % sets the text that appears on the start arrow
     \begin{enumerate}
         \item Pokazany układ wykrywa sekwencje odpowiadającą literze Q w alfabecie Morse'a.
         Po skonstruowaniu w analogiczny sposób układów dla każdej litery można zbudowac urządzenie, które tłumaczy wiadomość.
-        \begin{figure}[h]
+        \begin{figure}[H]
             \centering
             \includegraphics[width=0.3\linewidth]{images/translate.png}
             \caption{Tłumacznie wiadomości z alfabetu Morse'a}
         \end{figure}
         \item Można zmodyfikować układ aby wykrywał sekwencję odpowiadającą SOS i zbudować urządzenie, które
         po podpięciu do radia może włączać alarm kiedy ktoś nada taki sygnał.
-        \begin{figure}[h]
+        \begin{figure}[H]
             \centering
             \includegraphics[width=0.3\linewidth]{images/sos.png}
             \caption{Wykrywanie sygnału SOS}
@@ -701,7 +706,7 @@ initial text=$ $, % sets the text that appears on the start arrow
         \item Można układ połączyć z dzwonkiem do drzwi i elektronicznym zamkiem, 
         który umożliwia otworzenie drzwi jedynie osobom które znają sekwencję.
         translate
-        \begin{figure}[h]
+        \begin{figure}[H]
             \centering
             \includegraphics[width=0.3\linewidth]{images/door.png}
             \caption{Zamek otwierający drzwi po wprowadzeniu sekwencji}
