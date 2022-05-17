@@ -269,12 +269,19 @@ initial text=$ $, % sets the text that appears on the start arrow
         kolejnych naciśnięciach - na przykład włączanie i wyłączanie lampy
 
         \item Dwójkę liczącą można zastosować także na linii produkcyjnej, jeśli chcemy rozdzielić
-        obróbkę produktu na dwie maszyny
+        obróbkę produktu na dwie maszyny. Dzięki dwójce liczącej możemy podawać sygnał
+        raz na jedną raz na drugą maszynę.
+
+        \item Licznik modulo 8 możemy wykorzystać w oprogramowaniu wiatraka chłodzącego pokój.
+        Śmigła wiatraka przyczepione są do serwomechanizmu, do którego podajemy kolejne liczby z licznika.
+        Liczby wskazują kolejne pozycje serwa.
     \end{enumerate}
 
     \subsection{Wnioski}
     \begin{enumerate}
-        \item Dwójkę liczącą można zaimplementować także na inne sposoby wynikające z tabeli Karnough(\hyperref[solution]{patrz 1.2}).
+        \item Dwójkę liczącą można zaimplementować także na inne 
+        sposoby wynikające z tabeli prawdy
+        (\hyperref[tab:JK_truthtable]{Tabela \ref{tab:JK_truthtable}}).
         W praktyce jednak wybraliśmy najprostyszy do skonstruowania.
     \end{enumerate}
 
@@ -624,4 +631,15 @@ initial text=$ $, % sets the text that appears on the start arrow
         sygnału}
         \label{fig:q_idea_plot}
     \end{figure}
+
+
+    \subsection{Zastosowania}
+    \begin{enumerate}
+        \item Najbardziej oczywistym zastosowaniem takiego układu jest 
+        dekoder kodu Morse'a. Konieczne byłoby zaimplementowanie
+        analogicznego układu dla każdej litery.
+    \end{enumerate}
+
+    \subsection{Wnioski}
+    
 \end{document}
