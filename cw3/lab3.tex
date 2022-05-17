@@ -250,14 +250,15 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \subsection{Rozwiązanie teoretyczne}
     \subsubsection{Licznik modulo 8}
-    Zauważmy, że najmłodszy bit zmienia swój stan w każdym takcie zegara, a każdy
-    kolejny zmienia się tylko wtedy gdy poprzedni bit zmienia się z 1 na 0. Oddaje
+    Zauważmy, że najmłodszy bit zmienia swój stan w każdym takcie zegara, a $n+1$ -szy 
+    zmienia się tylko wtedy gdy na $n$-tym bicie następuje przeniesienie (zmiana z 1 na 0). 
+    Oddaje
     to naturę liczenia w systemie binarnym.
     (\hyperref[tab:mod8_truthtable]{Patrz tabela \ref{tab:mod8_truthtable}}).
-    Oznacza to, że o implementacji licznika modulo 8 można użyć 3 dwójek liczących, gdzie
-    każda dwójka reprezentuje 1 bit liczby 3 bitowej. Zanegowane wyjścia dwójki reprentującej
-    młodszy bit podepniey do wejścia zegara dwójki starszej. W ten sposób każda kolejna
-    dwójka licząca zmieni swój stan wtedy, kiedy w poprzedniej zaszła zmiana stanu z 1 na 0.
+    Oznacza to, że do implementacji licznika modulo 8 można użyć 3 dwójek liczących, gdzie
+    każda dwójka reprezentuje jeden bit liczby 3-bitowej. 
+    Ponieważ nasze dwójki liczące zmieniają stan przy wzroście sygnału wejściowego (zmiana z 0 na 1)
+    to wsytarczy połączyć kolejne dwójki bramkami NOT
     A zatem schemat takiego układu może wygladać jak poniżej:
     \begin{figure}[H]
         \centering
@@ -296,11 +297,12 @@ initial text=$ $, % sets the text that appears on the start arrow
         \item Licznik modulo 8 możemy wykorzystać w oprogramowaniu wiatraka chłodzącego pokój.
         Śmigła wiatraka przyczepione są do serwomechanizmu, do którego podajemy kolejne liczby z licznika.
         Liczby wskazują kolejne pozycje serwa.
-    \end{enumerate}
 
-    \subsection{Wnioski}
-    \begin{enumerate}
-        \item lol
+        \item Robot przemysłowy posiadajacy 8 możliwych stanów. Jego aktualna 
+        pozycja jest definiowana wyjściem z licznika modulo 8.
+
+        \item Poziom ciepła w płycie grzewczej. Kiedy klikamy klawisz zmiany
+        temperatury, licznik inkrementuje się zmieniając temperaturę kuchenki.
     \end{enumerate}
 
     \pagebreak
@@ -430,7 +432,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     Górne wykresy to wyjście oczekiwane, dolne - wyjście uzyskane. Zielony wykres to równoważność
     tych stanów - jest zawsze w stanie wysokim, co dowodzi poprawności działania układu
-
+    \pagebreak
     \subsection{Wnioski}
     \begin{enumerate}
         \item Licznik w kodzie Gray'a ma przewagę nad zwykłym licznikiem binarnym, gdyż podczas przejścia
@@ -442,9 +444,11 @@ initial text=$ $, % sets the text that appears on the start arrow
     \begin{enumerate}
         \item Wynika z tego, że układ ten może być użyty tam, gdzie trzeba zliczać szybko i nieregularnie
         następujące zdarzenia, na przykład rozpady promieniotwórcze w liczniku Geigera
-        \item Licznik w kodzie Gray'a może przydać się też podczas kontroli jakości przedmiotów, które
-        zawierają pewną liczbę stanów logicznych, przejście pomiędzy którymi ma pewien koszt. Przykładem może być
-        testowanie robotycznego ramienia sterowanego hydraulicznie we wszystkich pozycjach.
+        \item Enkoder pozycji silnika w jednym z członów ramienia robotycznego. Chcemy 
+        zagwarantować, że kolejne zadane pozycje będą sąsiądnimi liczbami (w kodzie Graya).
+        W przypadku zwykego kodu binarnego może nastąpić fluktuaja i odczytania zostanie zła wartość
+        np. przejście z 0111 na 1000 (jeśli odczyt następi w czasie zmiany stanu licznika
+        możliwe jest odczytanie wartości 1010)
     \end{enumerate}
 
 
