@@ -38,5 +38,12 @@ for i in range(n):
     else:
         final.append(2*br[i])
 
-print("\n".join(str(v) for v in final), end='')
+final = final + final[:7]
+print("Data:")
+print("\n".join("0000000"+str(v) for v in final), end='')
+print()
+print("Initial:")
+print("0000")
+print("Final:")
+print(str(len(final)).zfill(4))
 
