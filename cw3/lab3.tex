@@ -589,7 +589,6 @@ initial text=$ $, % sets the text that appears on the start arrow
         \end{minipage} 
     \end{table}
 
-    Trzy ostatnie stany pozostawiamy niezdefiniowane.
     \begin{figure}[H]
         \begin{minipage}{.5\linewidth}
             \begin{karnaugh-map}[4][4][1][$Q_{0}X$][$Q_{2}Q_{1}$]
@@ -608,7 +607,7 @@ initial text=$ $, % sets the text that appears on the start arrow
             \end{karnaugh-map}
             \caption{D1}
         \end{minipage}
-        \begin{minipage}{1\linewidth}
+        \begin{minipage}{0.8\linewidth}
             \centering
             \begin{karnaugh-map}[4][4][1][$Q_{0}X$][$Q_{2}Q_{1}$]
                 \manualterms{0,0,0,0,0,1,0,0,X,X,X,X,0,0,X,X}
@@ -636,20 +635,24 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=\linewidth]{images/q_input.PNG}
+        \includegraphics[width=0.7\linewidth]{cw03/images/q_input_RC.PNG}
         \caption{Schemat układu pozwalającego wprowadzać dane do automatu}
         \label{fig:q_input}
     \end{figure}
 
+    Należy zauważyć, że automat powinien otrzymać rosnące wejście zegara dopiero w momencie, gdy szyna daych ma już ustalony stan. Wobec tego na szynie zegara zastosowano opóźniający układ RC dający opóźnienie
+    \begin{equation*}
+        \Delta t = RC\ln 2 = 10k\Omega \cdot 1nF \cdot \ln 2 \approx 7\mu s.
+    \end{equation*}
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.3\linewidth]{images/q_input_plot.PNG}
-        \caption{Wykres stanów szyn danych i czasu podczas wprowadzania
-        sygnału}
+        \includegraphics[width=0.5\linewidth]{cw03/images/q_input_oscilloscope.PNG}
+        \caption{Analiza zachowania układu wprowadzającego dane na oscyloskopie. Detekcja impulsu zegara ma miejsce przy przekroczeniu poziomu 2,5V}
         \label{fig:q_idea_plot}
     \end{figure}
 
+    \pagebreak
     \subsection{Projektowanie układu}
 
     Wzory wyznaczone wyżej
