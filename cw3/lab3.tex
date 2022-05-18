@@ -444,11 +444,12 @@ initial text=$ $, % sets the text that appears on the start arrow
     \begin{enumerate}
         \item Wynika z tego, że układ ten może być użyty tam, gdzie trzeba zliczać szybko i nieregularnie
         następujące zdarzenia, na przykład rozpady promieniotwórcze w liczniku Geigera
+        
         \item Enkoder pozycji silnika w jednym z członów ramienia robotycznego. Chcemy 
         zagwarantować, że kolejne zadane pozycje będą sąsiądnimi liczbami (w kodzie Graya).
-        W przypadku zwykego kodu binarnego może nastąpić fluktuaja i odczytania zostanie zła wartość
+        W przypadku zwykego kodu binarnego może nastąpić fluktuacja i odczytania zostanie zła wartość
         np. przejście z 0111 na 1000 (jeśli odczyt następi w czasie zmiany stanu licznika
-        możliwe jest odczytanie wartości 1010)
+        możliwe jest odczytanie wartości 1010 co może skutkować przesunięciem ramienia na złą pozycje)
     \end{enumerate}
 
 
@@ -738,18 +739,25 @@ initial text=$ $, % sets the text that appears on the start arrow
             \includegraphics[width=0.3\linewidth]{images/translate.png}
             \caption{Tłumacznie wiadomości z alfabetu Morse'a}
         \end{figure}
+
         \item Detekcja początku pakietu/ramki z danymi. Po detekcji ustalonej sekwencji
         system rozpoznaje ramkę i zaczyna odczytywanie danych.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.8\linewidth]{cw03/images/3c_msg_start.png}
+            \caption{Wykrywanie początku ramki danych}
+        \end{figure}
+        
         \item Można zmodyfikować układ aby wykrywał sekwencję odpowiadającą SOS i zbudować urządzenie, które
         po podpięciu do radia może włączać alarm kiedy ktoś nada taki sygnał.
         \begin{figure}[H]
             \centering
-            \includegraphics[width=0.3\linewidth]{images/sos.png}
+            \includegraphics[width=0.8\linewidth]{cw03/images/3c_SOS.png}
             \caption{Wykrywanie sygnału SOS}
         \end{figure}
         \item Można układ połączyć z dzwonkiem do drzwi i elektronicznym zamkiem, 
         który umożliwia otworzenie drzwi jedynie osobom które znają sekwencję.
-        translate
+        
         \begin{figure}[H]
             \centering
             \includegraphics[width=0.3\linewidth]{images/door.png}
