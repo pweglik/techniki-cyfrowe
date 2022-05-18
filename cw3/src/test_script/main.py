@@ -40,10 +40,13 @@ for i in range(n):
 
 final = final + final[:7]
 print("Data:")
-print("\n".join("0000000"+str(v) for v in final), end='')
+print("\n".join(f"{v:08x}" for v in final), end='')
 print()
 print("Initial:")
-print("0000")
+print(f"0000")
 print("Final:")
-print(str(len(final)).zfill(4))
+print(f"{len(final):04}")
+
+
+
 

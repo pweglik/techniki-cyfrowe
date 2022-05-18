@@ -678,16 +678,55 @@ initial text=$ $, % sets the text that appears on the start arrow
 
     W celu dodania możliwości prostego resetowania układu do stanu początkowego łączymy
     piny reset na przerzutnikach z pinem resetowania układu.
+    
+    
+    \subsection{Testy w programie Multisim}
+    Układ testowy składa się z badanego układu, generatora słów binarnych oraz analizatora logicznego. Wyjście badanego układu jest porównywane z oczekiwanym wyjściem tylko gdy wyjście badanego układu i generatora jest w stanie stabilnym. Wykorzystano do tego wyjście READY generatora słów oraz prosty układ opóźniający RC.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\linewidth]{cw03/images/3c_test_schemat.png}
+        \caption{Schemat układu testującego}
+        \label{fig:gray_test}
+    \end{figure}
 
+    \pagebreak
+    Do generatora słów binarnych wygenerowano oczekiwane wyjście oraz cykl de Bruijna nad alfabetem $\{0, 1\}$ o długości $2^8$. Jest to sekwencja cykliczna która zawiera wszystkie podsłowa długości 8 dokładnie raz. Ponieważ jest to sekwencja cykliczna, aby móc testować w trybie "Burst" na końcu wygenerowanego wejścia powtórzono pierwsze 7 elementów sekwencji. \\ 
+    Wykorzystanie cyklu de Bruijna pozwoliło przetestować układ na wszystkich sekwencjach długości 8 co odpowiada przetestwaniu poprawnego rozpoznania każdej sekwencji 4 bitowej będąc w każdym możliwym stanie automau.\\
+    Żródło kodu generującego cykl de Bruijna: \url{https://en.wikipedia.org/wiki/De_Bruijn_sequence}
+    \begin{figure}[hp]
+        \centering
+        \includegraphics[width=0.8\linewidth]{cw03/images/3c_python.png}
+        \caption{Kod generujący wejście do generatora słów binarnych}
+        \label{fig:gray_xwb}
+    \end{figure}
+    \pagebreak
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.8\linewidth]{cw03/images/3c_test_xwg.png}
+        \caption{Ustawienia generatora słów binarnych}
+        \label{fig:gray_xwb}
+    \end{figure}
+    
+    Poniżej przedstawiono wykres wygenerowany przez analizator stanów logicznych:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{cw03/images/3c_test_xla.png}
+        \caption{Przebieg stanów logicznych}
+        \label{fig:gray_xla}
+    \end{figure}
+
+    Górny wykres to wejście (cykl de Bruijna), granatowy to wyjście oczekiwane, niebieski - wyjście uzyskane. Zielony wykres to równoważność
+    tych stanów. Wykres czerwony to wyjście z przerzutnika RS pozwalajacy sprawdzić czy kiedykolwiek podczas testu wykryto błąd - ponieważ na końcu przebiegu jest w stanie niskim, testy wykazały poprawność układu.  
 
     \subsection{Wnioski}
     \begin{enumerate}
         \item Istnieją różne sposoby wprowadzania danych. 
-        Zdecydowaliśmy się na dwa przyciski odpowiadające kropce i kresce, czego skutkiem jest konieczność opóźniania sygnału aby wyjście się ustabilizowało.
+        Zdecydowaliśmy się na dwa przyciski odpowiadające kropce i kresce, czego skutkiem jest konieczność opóźniania sygnału aby wejście się ustabilizowało.
         Alternatywnie można było użyć dwóch przełączników, gdzie jeden odpowiada za dane a drugi potwierdza wprowadzenie.
         Takie rozwiązanie pomimo że skutkuje prostrzym układem jest mało intuicyjne w użytkowaniu.
-        \item Opóźnienie można najprościej zaimplementować szeregowo połączonymi bramkami które razem nie modyfikuja wartości logicznej.
-        Bardziej typowym rozwiązaniem jest zastosowanie opóźnienia w oparciu o układ RC, kosztem większego skomplikowania schematu.
+        
+        
+        \item Opóźnienie można alternatywnie zaimplementować szeregowo połączonymi bramkami które razem nie modyfikuja wartości logicznej. Użylismy jednak układu RC który jest bardziej uniwersalny i pozwala dokładniej kontrolować czas opóźnienia.
     \end{enumerate}
 
     \subsection{Zastosowania}
